@@ -300,8 +300,51 @@ function initPortfolioSlider() {
           snapToCurrentIndex();
           triggerCooldown();
         }
-      }
     }, { passive: false });
+
+    // Touch swipe detection with vertical axis lock stabilization
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    viewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].screenX;
+      touchStartY = e.touches[0].screenY;
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      const minSwipeDistance = 60; // minimum distance in pixels
+      
+      // Ensure horizontal swipe is dominant and passes threshold
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+        if (diffX < 0) {
+          // Swiped left -> next slide
+          if (currentIndex < originalCount - 1) {
+            currentIndex++;
+          } else {
+            currentIndex = 0;
+          }
+          snapToCurrentIndex();
+        } else {
+          // Swiped right -> prev slide
+          if (currentIndex > 0) {
+            currentIndex--;
+          } else {
+            currentIndex = originalCount - 1;
+          }
+          snapToCurrentIndex();
+        }
+      }
+    }
   }
 
   function triggerCooldown() {
@@ -1184,8 +1227,34 @@ function initPhilosophyStoryboard() {
     }
   };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Trigger initial check
+  // Disable scroll animations on mobile/tablet since the layout is static (prevents style jumping and conflicts)
+  const isMobileOrTablet = window.innerWidth <= 991;
+  if (!isMobileOrTablet) {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Trigger initial check
+  } else {
+    // Reset all inline styles on mobile to ensure static visibility and clean styling
+    photoWrapper.style.opacity = '1';
+    photoWrapper.style.transform = '';
+    if (textLeft && textRight) {
+      textLeft.style.opacity = '1';
+      textLeft.style.transform = '';
+      textRight.style.opacity = '1';
+      textRight.style.transform = '';
+    }
+    cornerAbout.style.opacity = '1';
+    cornerAbout.style.transform = '';
+    cornerPhilosophy.style.opacity = '1';
+    cornerPhilosophy.style.transform = '';
+    if (cornerFocus) {
+      cornerFocus.style.opacity = '1';
+      cornerFocus.style.transform = '';
+    }
+    if (cornerExperiment) {
+      cornerExperiment.style.opacity = '1';
+      cornerExperiment.style.transform = '';
+    }
+  }
 }
 
 /**
@@ -1218,7 +1287,7 @@ function initProjectGalleryModal() {
   let database = {};
   
   // Fetch local database mapping project IDs to images/videos (with cache-busting version)
-  fetch('assets/projects/database.json?v=17.44')
+  fetch('assets/projects/database.json?v=17.51')
     .then(res => res.json())
     .then(data => {
       database = data;

@@ -39,6 +39,13 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--bg-primary);
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Responsive helper classes */
+.mobile-only {
+  display: none !important;
 }
 
 body {
@@ -218,8 +225,20 @@ header.scrolled {
 }
 
 @media (max-width: 768px) {
-  .nav-menu, #header-cta-btn {
+  #header-cta-btn {
     display: none;
+  }
+  .nav-menu {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+  }
+  .nav-link {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.02em;
+    padding: 0.25rem 0;
   }
 }
 
@@ -623,6 +642,10 @@ footer {
   }
   .scroll-hero-middle-text {
     font-size: 1.2rem;
+  }
+  .hero-badge {
+    font-size: 1.05rem !important;
+    letter-spacing: calc(0.3em - var(--scroll-progress, 0) * 0.28em) !important;
   }
 }
 
@@ -1323,6 +1346,7 @@ footer {
 .timeline-scroll-wrapper {
   max-height: 480px; /* Aligns with awards grid height to keep it balanced */
   overflow-y: auto;
+  overflow-x: hidden; /* Lock scroll to vertical axis */
   scrollbar-width: none; /* Hides default scrollbar in Firefox */
   position: relative;
   padding-left: 1.5rem;
@@ -1840,6 +1864,7 @@ footer {
   position: relative;
   padding: 4rem 0;
   cursor: grab;
+  touch-action: pan-y;
 }
 
 .portfolio-slider-viewport:active {
@@ -4124,6 +4149,74 @@ body.modal-open {
 }
 .modal-content-wrapper.project-80040463 .modal-credits-module strong {
   color: #ffffff !important;
+}
+
+/* Responsive Overrides for Mobile Storyboard */
+@media (max-width: 991px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: block !important;
+  }
+  #about.storyboard-section {
+    height: auto !important;
+  }
+  #about .storyboard-scroll-container {
+    height: auto !important;
+  }
+  #about .storyboard-sticky-content {
+    position: static !important;
+    height: auto !important;
+    padding: 3rem 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+  #about .storyboard-main-container {
+    position: relative !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-bottom: 2rem !important;
+  }
+  #about .storyboard-center-title {
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem !important;
+    font-weight: 800;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase;
+    color: #000000 !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 1.5rem auto !important;
+    line-height: 1.2;
+  }
+  #about .storyboard-photo-wrapper {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 240px !important;
+    height: auto !important;
+    margin: 1.5rem auto !important;
+  }
+  #about .storyboard-photo-frame {
+    height: 334px !important; /* Force static vertical frame */
+  }
+  #about .corner-box {
+    position: static !important;
+    width: 100% !important;
+    max-width: 550px !important;
+    margin: 1rem auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    text-align: left !important;
+  }
 }
 
 
