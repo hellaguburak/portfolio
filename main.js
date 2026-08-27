@@ -1276,17 +1276,6 @@ function initPhilosophyStoryboard() {
     window.addEventListener('scroll', mobileHandleScroll, { passive: true });
     mobileHandleScroll(); // Trigger initial check
 
-    // Read More button click handler for mobile
-    const readMoreButtons = section.querySelectorAll('.read-more-btn');
-    readMoreButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const box = e.currentTarget.closest('.corner-box');
-        if (box) {
-          box.classList.add('expanded');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
   }
 }
 

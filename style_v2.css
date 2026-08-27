@@ -4151,6 +4151,10 @@ body.modal-open {
 
 /* Responsive Overrides for Mobile Storyboard */
 @media (max-width: 991px) {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
   .desktop-only {
     display: none !important;
   }
@@ -4178,7 +4182,6 @@ body.modal-open {
     flex-direction: column !important;
     align-items: center !important;
     margin-bottom: 2rem !important;
-    order: 3 !important;
   }
   #about .storyboard-center-title {
     position: relative !important;
@@ -4194,7 +4197,6 @@ body.modal-open {
     width: 100% !important;
     margin: 0 auto 1.5rem auto !important;
     line-height: 1.2;
-    order: 1 !important;
   }
   #about .storyboard-photo-wrapper {
     position: relative !important;
@@ -4204,7 +4206,7 @@ body.modal-open {
     transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
     width: 240px !important;
     height: auto !important;
-    margin: 1.5rem auto !important;
+    margin: 3.5rem auto !important; /* Spacing to push GIF down and center it between texts */
   }
   #about .storyboard-photo-frame {
     height: 334px !important; /* Force static vertical frame */
@@ -4213,59 +4215,10 @@ body.modal-open {
     position: static !important;
     width: 100% !important;
     max-width: 550px !important;
-    margin: 1rem auto !important;
+    margin: 1.5rem auto !important;
     opacity: 1 !important;
     transform: none !important;
     text-align: left !important;
-    pointer-events: auto !important; /* Enable click events on mobile */
-  }
-  #about .corner-box .box-text {
-    max-height: 72px; /* Limit to roughly 3 lines initially */
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    position: relative;
-  }
-  /* Fade out gradient overlay for collapsed text */
-  #about .corner-box .box-text::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 24px;
-    background: linear-gradient(to bottom, rgba(235, 235, 232, 0) 0%, #ebebe8 100%);
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  #about .corner-box.expanded .box-text {
-    max-height: 450px; /* Allow expansion */
-  }
-  #about .corner-box.expanded .box-text::after {
-    opacity: 0;
-  }
-  #about .read-more-btn {
-    display: inline-block !important;
-    background: none;
-    border: none;
-    color: #000000;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: underline;
-    padding: 0.25rem 0;
-    margin-top: 0.5rem;
-    cursor: pointer;
-  }
-  #about .corner-box.expanded .read-more-btn {
-    display: none !important;
-  }
-  #about #corner-about {
-    order: 2 !important;
-  }
-  #about #corner-philosophy {
-    order: 4 !important;
   }
 }
 
