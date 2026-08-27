@@ -1234,48 +1234,91 @@ function initPhilosophyStoryboard() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Trigger initial check
   } else {
-    // Reset all inline styles on mobile to ensure static visibility and clean styling
+    // Reset and force inline static/relative positioning on mobile to override cached absolute CSS
     photoWrapper.style.opacity = '1';
-    
+    photoWrapper.style.position = 'relative';
+    photoWrapper.style.top = '0';
+    photoWrapper.style.left = '0';
+    photoWrapper.style.width = '240px';
+    photoWrapper.style.height = 'auto';
+    photoWrapper.style.margin = '3.5rem auto';
+    photoWrapper.style.display = 'block';
+
+    const mainContainer = section.querySelector('.storyboard-main-container');
+    if (mainContainer) {
+      mainContainer.style.position = 'relative';
+      mainContainer.style.height = 'auto';
+      mainContainer.style.transform = 'none';
+      mainContainer.style.top = '0';
+      mainContainer.style.left = '0';
+      mainContainer.style.display = 'flex';
+      mainContainer.style.flexDirection = 'column';
+      mainContainer.style.alignItems = 'center';
+      mainContainer.style.width = '100%';
+    }
+
+    const stickyContent = section.querySelector('.storyboard-sticky-content');
+    if (stickyContent) {
+      stickyContent.style.position = 'static';
+      stickyContent.style.height = 'auto';
+      stickyContent.style.display = 'flex';
+      stickyContent.style.flexDirection = 'column';
+      stickyContent.style.padding = '3rem 1.5rem';
+    }
+
+    const scrollContainer = section.querySelector('.storyboard-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.style.height = 'auto';
+    }
+
+    section.style.height = 'auto';
+
     if (textLeft && textRight) {
       textLeft.style.opacity = '1';
       textLeft.style.transform = '';
       textRight.style.opacity = '1';
       textRight.style.transform = '';
     }
-    cornerAbout.style.opacity = '1';
-    cornerAbout.style.transform = '';
-    cornerPhilosophy.style.opacity = '1';
-    cornerPhilosophy.style.transform = '';
-    if (cornerFocus) {
-      cornerFocus.style.opacity = '1';
-      cornerFocus.style.transform = '';
-    }
-    if (cornerExperiment) {
-      cornerExperiment.style.opacity = '1';
-      cornerExperiment.style.transform = '';
-    }
 
-    // Lightweight scroll listener for mobile to scale the GIF dynamically as it scrolls into view
+    const boxes = [cornerAbout, cornerPhilosophy, cornerFocus, cornerExperiment];
+    boxes.forEach(box => {
+      if (box) {
+        box.style.position = 'static';
+        box.style.opacity = '1';
+        box.style.transform = 'none';
+        box.style.width = '100%';
+        box.style.maxWidth = '550px';
+        box.style.margin = '1.5rem auto';
+        box.style.pointerEvents = 'auto';
+      }
+    });
+
+    // Throttled scroll listener using requestAnimationFrame to prevent layout thrashing and freezing
+    let ticking = false;
     const mobileHandleScroll = () => {
-      const rect = photoWrapper.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      const photoCenter = rect.top + rect.height / 2;
-      const distanceToCenter = Math.abs(photoCenter - viewportCenter);
-      const maxDistance = window.innerHeight * 0.7; // start scaling within 70% of screen height
-      
-      if (distanceToCenter < maxDistance) {
-        const factor = 1 - (distanceToCenter / maxDistance); // 0 to 1
-        const scale = 0.75 + (factor * 0.40); // scales from 0.75 to 1.15
-        photoWrapper.style.transform = `scale(${scale})`;
-      } else {
-        photoWrapper.style.transform = 'scale(0.75)';
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const rect = photoWrapper.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const photoCenter = rect.top + rect.height / 2;
+          const distanceToCenter = Math.abs(photoCenter - viewportCenter);
+          const maxDistance = window.innerHeight * 0.7; // start scaling within 70% of screen height
+          
+          if (distanceToCenter < maxDistance) {
+            const factor = 1 - (distanceToCenter / maxDistance); // 0 to 1
+            const scale = 0.75 + (factor * 0.40); // scales from 0.75 to 1.15
+            photoWrapper.style.transform = `scale(${scale})`;
+          } else {
+            photoWrapper.style.transform = 'scale(0.75)';
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener('scroll', mobileHandleScroll, { passive: true });
     mobileHandleScroll(); // Trigger initial check
-
   }
 }
 
@@ -1309,7 +1352,7 @@ function initProjectGalleryModal() {
   let database = {};
   
   // Fetch local database mapping project IDs to images/videos (with cache-busting version)
-  fetch('assets/projects/database.json?v=17.54')
+  fetch('assets/projects/database.json?v=17.55')
     .then(res => res.json())
     .then(data => {
       database = data;
