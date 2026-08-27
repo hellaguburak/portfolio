@@ -1236,7 +1236,7 @@ function initPhilosophyStoryboard() {
   } else {
     // Reset all inline styles on mobile to ensure static visibility and clean styling
     photoWrapper.style.opacity = '1';
-    photoWrapper.style.transform = '';
+    
     if (textLeft && textRight) {
       textLeft.style.opacity = '1';
       textLeft.style.transform = '';
@@ -1255,6 +1255,26 @@ function initPhilosophyStoryboard() {
       cornerExperiment.style.opacity = '1';
       cornerExperiment.style.transform = '';
     }
+
+    // Lightweight scroll listener for mobile to scale the GIF dynamically as it scrolls into view
+    const mobileHandleScroll = () => {
+      const rect = photoWrapper.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const photoCenter = rect.top + rect.height / 2;
+      const distanceToCenter = Math.abs(photoCenter - viewportCenter);
+      const maxDistance = window.innerHeight * 0.7; // start scaling within 70% of screen height
+      
+      if (distanceToCenter < maxDistance) {
+        const factor = 1 - (distanceToCenter / maxDistance); // 0 to 1
+        const scale = 0.75 + (factor * 0.40); // scales from 0.75 to 1.15
+        photoWrapper.style.transform = `scale(${scale})`;
+      } else {
+        photoWrapper.style.transform = 'scale(0.75)';
+      }
+    };
+
+    window.addEventListener('scroll', mobileHandleScroll, { passive: true });
+    mobileHandleScroll(); // Trigger initial check
   }
 }
 
@@ -1288,7 +1308,7 @@ function initProjectGalleryModal() {
   let database = {};
   
   // Fetch local database mapping project IDs to images/videos (with cache-busting version)
-  fetch('assets/projects/database.json?v=17.53')
+  fetch('assets/projects/database.json?v=17.54')
     .then(res => res.json())
     .then(data => {
       database = data;
