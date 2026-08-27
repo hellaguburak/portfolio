@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D MacBook Scroll Interactive Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000000;
+            color: #f5f5f7;
+            overflow-x: hidden;
+        }
+
+        /* 3D Canvas Container */
+        .viewer-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none; /* Allows scrolling over the canvas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.85;
+        }
+
+        spline-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Scrollable Content Layers */
+        .scroll-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 10%;
+            pointer-events: auto;
+        }
+
+        .hero-text {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 24px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: #86868b;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #6e6e73;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -10px); }
+            60% { transform: translate(-50%, -5px); }
+        }
+    </style>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Spline Viewer Component -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js"></script>
+</head>
+<body>
+
+    <!-- 3D Spline Canvas -->
+    <div class="viewer-container">
+        <spline-viewer id="macbook-viewer" url="https://prod.spline.design/MB8chsPUsSd6ysUT/scene.splinecode"></spline-viewer>
+    </div>
+
+    <!-- Foreground Sections -->
+    <div class="scroll-container">
+        <section id="section-1">
+            <div class="hero-text">
+                <h1>MacBook Pro.</h1>
+                <p>İnanılmaz güç. Aşağı kaydırarak keşfedin.</p>
+            </div>
+            <div class="scroll-hint">Aşağı Kaydırın ↓</div>
+        </section>
+
+        <section id="section-2">
+            <div class="hero-text">
+                <h1>M-Serisi Performansı.</h1>
+                <p>Sınırları zorlayan hız ve verimlilik.</p>
+            </div>
+        </section>
+
+        <section id="section-3">
+            <div class="hero-text">
+                <h1>Tasarımla Buluşan Güç.</h1>
+                <p>Göz alıcı detaylar, benzersiz deneyim.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const splineViewer = document.getElementById('macbook-viewer');
+
+        splineViewer.addEventListener('load', () => {
+            const splineApp = splineViewer.spline;
+
+            if (splineApp) {
+                // GSAP ScrollTrigger to scrub Spline animations/states
+                gsap.to({}, {
+                    scrollTrigger: {
+                        trigger: ".scroll-container",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            // Spline trigger variables or actions can be sent here:
+                            // splineApp.emitEvent('scroll', progress);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

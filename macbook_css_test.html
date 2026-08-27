@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 3D MacBook Interactive Iframe Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            height: 300vh; /* Scroll space */
+        }
+
+        .intro-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .intro-text {
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .intro-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-text p {
+            color: #888;
+            font-size: 1.2rem;
+        }
+
+        /* 3D Scene Wrapper */
+        .scene-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1600px; /* Strong 3D depth perspective */
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 3D Laptop Object */
+        .laptop {
+            position: relative;
+            width: 760px;
+            height: 480px;
+            transform-style: preserve-3d;
+            transform: rotateX(16deg) rotateY(-8deg) translateY(40px);
+            transition: transform 0.1s ease-out;
+            pointer-events: auto;
+        }
+
+        /* Screen / Lid */
+        .lid {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 700px;
+            height: 440px;
+            background: #1b1b1c;
+            border: 14px solid #090909;
+            border-radius: 16px 16px 0 0;
+            transform-origin: bottom center;
+            transform-style: preserve-3d;
+            transform: rotateX(-90deg); /* Start fully closed (pointing backwards) */
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+        }
+
+        /* Screen reflection overlay mockup */
+        .screen-glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 50%);
+            z-index: 5;
+            pointer-events: none;
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* Screen content iframe displaying portfolio index.html */
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            background: #080807;
+            border: none;
+            overflow-y: auto;
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* Keyboard Base */
+        .base {
+            position: absolute;
+            bottom: 40px;
+            left: 10px;
+            width: 740px;
+            height: 440px;
+            background: linear-gradient(to bottom, #2d2d30, #141415);
+            border-radius: 0 0 20px 20px;
+            transform: rotateX(90deg); /* Flat on table */
+            transform-origin: bottom center;
+            box-shadow: 0 35px 120px rgba(0,0,0,0.85);
+            border-top: 2px solid #3c3c3e;
+        }
+
+        /* Trackpad mockup */
+        .trackpad {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.01);
+            border-radius: 6px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+    <!-- 3D Scene Container -->
+    <div class="scene-container">
+        <div class="laptop" id="laptop-3d">
+            <!-- Screen Lid with glare and Live Iframe -->
+            <div class="lid" id="laptop-lid">
+                <div class="screen-glare"></div>
+                <iframe class="screen-content" src="index.html" title="Portfolio Live View"></iframe>
+            </div>
+            <!-- Base flat keyboard -->
+            <div class="base">
+                <div class="trackpad"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Sections -->
+    <div class="intro-section">
+        <div class="intro-text">
+            <h1>CSS 3D MacBook</h1>
+            <p>Aşağı kaydırarak ekranı açın ve sitenizi inceleyin ↓</p>
+        </div>
+    </div>
+    
+    <div style="height: 100vh;"></div>
+    
+    <div class="intro-section" style="justify-content: flex-end; padding-bottom: 10%;">
+        <div class="intro-text">
+            <h1>Tamamen İnteraktif.</h1>
+            <p>Ekranın içindeki siteye tıklayıp normal şekilde gezinebilirsiniz!</p>
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Open the laptop lid as you scroll down
+        gsap.to("#laptop-lid", {
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "50% top",
+                scrub: 1,
+            },
+            rotateX: 0, /* Opens completely upright */
+            ease: "none"
+        });
+
+        // Rotate the laptop base slightly on scroll for a dynamic 3D feel
+        gsap.to("#laptop-3d", {
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5,
+            },
+            rotateY: 12,
+            rotateX: 22,
+            ease: "none"
+        });
+    </script>
+</body>
+</html>
