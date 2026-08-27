@@ -300,6 +300,7 @@ function initPortfolioSlider() {
           snapToCurrentIndex();
           triggerCooldown();
         }
+      }
     }, { passive: false });
 
     // Touch swipe detection with vertical axis lock stabilization
@@ -1287,7 +1288,7 @@ function initProjectGalleryModal() {
   let database = {};
   
   // Fetch local database mapping project IDs to images/videos (with cache-busting version)
-  fetch('assets/projects/database.json?v=17.51')
+  fetch('assets/projects/database.json?v=17.52')
     .then(res => res.json())
     .then(data => {
       database = data;
