@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Burak Hellagu | Award-winning Head of Creative & Brand Strategist. Specializing in high-impact art direction and premium consulting. Ex-Getir US & Pazarama.">
   <title>Burak Hellagu | Head of Creative & Brand Strategist</title>
-  <link rel="stylesheet" href="style_v4.css">
+  <link rel="stylesheet" href="style_v14.css">
 </head>
 <body>
 
   <!-- Sui-style Dynamic Gradient Transition Overlay -->
-  <div class="sui-transition-overlay active-sweep" id="sui-transition">
+  <div class="sui-transition-overlay" id="sui-transition">
     <div class="sui-transition-bar sui-bar-left"></div>
     <div class="sui-transition-bar sui-bar-right"></div>
   </div>
@@ -85,7 +85,40 @@
   <div class="scroll-bg-text" id="scroll-text-1">ART DIRECTION</div>
   <div class="scroll-bg-text" id="scroll-text-2">BRAND ESSENCE</div>
 
-  <!-- Infinite Running Ticker Banner at the very top -->
+  <!-- Sticky Header & Nav -->
+  <header id="site-header">
+    <div class="container nav-container">
+      <ul class="nav-menu" id="nav-menu-list">
+        <li><a href="#hero" class="nav-link active" id="link-hero">
+          <span class="lang-en">Home</span>
+          <span class="lang-tr">Ana Sayfa</span>
+        </a></li>
+        <li><a href="#about" class="nav-link" id="link-about">
+          <span class="lang-en">Philosophy</span>
+          <span class="lang-tr">Felsefe</span>
+        </a></li>
+        <li><a href="#portfolio" class="nav-link" id="link-portfolio">
+          <span class="lang-en">Portfolio</span>
+          <span class="lang-tr">Portfolyo</span>
+        </a></li>
+        <li><a href="#experience" class="nav-link" id="link-experience">
+          <span class="lang-en">Experience</span>
+          <span class="lang-tr">Deneyim</span>
+        </a></li>
+        <li><a href="#contact" class="nav-link" id="link-contact">
+          <span class="lang-en">Contact</span>
+          <span class="lang-tr">İletişim</span>
+        </a></li>
+        <li><a href="https://www.linkedin.com/in/burakhellagu/" target="_blank" rel="noopener noreferrer" class="nav-link" id="link-linkedin">LinkedIn</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-primary" id="header-cta-btn">
+        <span class="lang-en">Let's Talk</span>
+        <span class="lang-tr">İletişime Geç</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Running Ticker Banner located directly below header (scrolls away on scroll) -->
   <div class="top-ticker-banner">
     <div class="ticker-track">
       <div class="ticker-content">
@@ -158,39 +191,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Sticky Header & Nav -->
-  <header id="site-header">
-    <div class="container nav-container">
-      <ul class="nav-menu" id="nav-menu-list">
-        <li><a href="#hero" class="nav-link active" id="link-hero">
-          <span class="lang-en">Home</span>
-          <span class="lang-tr">Ana Sayfa</span>
-        </a></li>
-        <li><a href="#about" class="nav-link" id="link-about">
-          <span class="lang-en">Philosophy</span>
-          <span class="lang-tr">Felsefe</span>
-        </a></li>
-        <li><a href="#portfolio" class="nav-link" id="link-portfolio">
-          <span class="lang-en">Portfolio</span>
-          <span class="lang-tr">Portfolyo</span>
-        </a></li>
-        <li><a href="#experience" class="nav-link" id="link-experience">
-          <span class="lang-en">Experience</span>
-          <span class="lang-tr">Deneyim</span>
-        </a></li>
-        <li><a href="#contact" class="nav-link" id="link-contact">
-          <span class="lang-en">Contact</span>
-          <span class="lang-tr">İletişim</span>
-        </a></li>
-        <li><a href="https://www.linkedin.com/in/burakhellagu/" target="_blank" rel="noopener noreferrer" class="nav-link" id="link-linkedin">LinkedIn</a></li>
-      </ul>
-      <a href="#contact" class="btn btn-primary" id="header-cta-btn">
-        <span class="lang-en">Let's Talk</span>
-        <span class="lang-tr">İletişime Geç</span>
-      </a>
-    </div>
-  </header>
 
   <!-- Floating Minimal Language Selector just below header -->
   <div class="lang-selector-floating">
@@ -428,7 +428,23 @@
       <!-- Slider viewport spans full width to allow overflow projects peek from right -->
       <div class="portfolio-slider-viewport reveal" id="portfolio-slider-view">
         <div class="portfolio-slider-track" id="portfolio-track">
-          <!-- Project 1 -->
+          <!-- Project 1: Getir -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_3.webp" alt="Getir Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Getir</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">UK Market & Food Delivery Creative Assets</span>
+              <span class="lang-tr">İngiltere Pazarı & Yemek Siparişi Kreatif Varlıkları</span>
+            </p>
+            <a href="https://www.behance.net/gallery/227451137/getir-uk" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 2: Tadelle -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
               <img src="assets/project_1.webp" alt="Tadelle Cover" class="portfolio-img">
@@ -444,7 +460,7 @@
             </a>
           </div>
 
-          <!-- Project 2 -->
+          <!-- Project 3: Poster Heroes -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
               <img src="assets/project_2.webp" alt="Poster Heroes Cover" class="portfolio-img">
@@ -460,249 +476,7 @@
             </a>
           </div>
 
-          <!-- Project 3 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_3.webp" alt="getir Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">getir</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">UK Market & Food Delivery Creative Assets</span>
-              <span class="lang-tr">İngiltere Pazarı & Yemek Siparişi Kreatif Varlıkları</span>
-            </p>
-            <a href="https://www.behance.net/gallery/227451137/getir-uk" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 25 (Kim O?) -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/projects/253695327/cover.png" alt="Kim O? Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Kim O?</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Brand Identity & Logo Design</span>
-              <span class="lang-tr">Brand Identity & Logo Design</span>
-            </p>
-            <a href="https://www.behance.net/gallery/253695327/Kim-O" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">View project &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 4 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_4.webp" alt="HXZ Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">HXZ</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Outdoor Packaging & Advertising Design</span>
-              <span class="lang-tr">Açıkhava Ambalaj & Reklam Tasarımı</span>
-            </p>
-            <a href="https://www.behance.net/gallery/58301571/HXZ-Fish-Oil-Outdoor-Design" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 6: Graphic Activism -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/projects/graphic_activism/still_human_2026_ani_kutusu.jpg" alt="Graphic Activism Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">GRAPHIC ACTIVISM</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Social Responsibility &amp; Poster Design</span>
-              <span class="lang-tr">Sosyal Sorumluluk &amp; Afiş Tasarımı</span>
-            </p>
-            <a href="https://www.behance.net/gallery/888888888/graphic-activism" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project: Pineapple NFT Collection -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/projects/pineapple_nft/2.jpg" alt="Pineapple NFT Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Pineapple NFT Collection</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Character Design &amp; Illustration Project</span>
-              <span class="lang-tr">Karakter Tasarımı &amp; İllüstrasyon Projesi</span>
-            </p>
-            <a href="https://www.behance.net/gallery/999999999/pineapple-nft" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 5 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_5.webp" alt="İstegelsin Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">İstegelsin</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Creative Operations & Visual Strategy</span>
-              <span class="lang-tr">Kreatif Operasyonlar & Görsel Strateji</span>
-            </p>
-            <a href="https://www.behance.net/gallery/102496333/istegelsin" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 6 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_6.webp" alt="Nine West Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Nine West</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">International Women's Day Campaign</span>
-              <span class="lang-tr">Dünya Kadınlar Günü Kampanyası</span>
-            </p>
-            <a href="https://www.behance.net/gallery/102573941/Nine-West-Kadnlar-Guenue" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-
-          <!-- Project 9 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_9.webp" alt="ISUZU Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">ISUZU</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Corporate Campaign Art Direction</span>
-              <span class="lang-tr">Kurumsal Kampanya Sanat Yönetimi</span>
-            </p>
-            <a href="https://www.behance.net/gallery/78806113/ISUZU" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 10 -->
-          <div class="portfolio-slide-card card-letgo">
-            <div class="portfolio-img-container">
-              <img src="assets/project_10.webp" alt="Letgo Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Letgo</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">"Öğrenciye Eşya" Social Impact Project</span>
-              <span class="lang-tr">"Öğrenciye Eşya" Sosyal Etki Projesi</span>
-            </p>
-            <a href="https://www.behance.net/gallery/80040463/Letgo-OEgrenciye-Esya" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-
-          <!-- Project 12 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_12.webp" alt="Film Fest Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Film Fest</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Key Visuals & Identity System</span>
-              <span class="lang-tr">Ana Görseller & Kurumsal Kimlik Sistemi</span>
-            </p>
-            <a href="https://www.behance.net/gallery/84812039/Film-fest" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 13 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_13.webp" alt="Sırma Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Sırma</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Premium Brand & Visual Identity</span>
-              <span class="lang-tr">Premium Marka & Görsel Kimlik</span>
-            </p>
-            <a href="https://www.behance.net/gallery/78070785/Srma" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 14 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_14.webp" alt="Öğrenci Filmleri Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Öğrenci Filmleri</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Competition Poster Design</span>
-              <span class="lang-tr">Yarışma Afiş Tasarımı</span>
-            </p>
-            <a href="https://www.behance.net/gallery/57383549/OEgrenci-Filmleri-Yarsma-Afisi" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 15 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_15.webp" alt="Oda Short Film Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Oda Short Film</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Short Film Art Direction & Poster</span>
-              <span class="lang-tr">Kısa Film Sanat Yönetimi & Afiş</span>
-            </p>
-            <a href="https://www.behance.net/gallery/91118795/oda-short-film" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 16 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_16.webp" alt="Bilyoner Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Bilyoner</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Digital Advertising & Campaign Assets</span>
-              <span class="lang-tr">Dijital Reklam & Kampanya Varlıkları</span>
-            </p>
-            <a href="https://www.behance.net/gallery/78738767/Bilyoner" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 17 -->
-          <div class="portfolio-slide-card">
-            <div class="portfolio-img-container">
-              <img src="assets/project_17.webp" alt="Arko Men Cover" class="portfolio-img">
-            </div>
-            <h3 class="portfolio-title">Arko Men</h3>
-            <p class="portfolio-desc">
-              <span class="lang-en">Brand Launch & Commercial Campaign</span>
-              <span class="lang-tr">Marka Lansmanı & Reklam Kampanyası</span>
-            </p>
-            <a href="https://www.behance.net/gallery/77655477/Arko-Men" target="_blank" rel="noopener noreferrer" class="portfolio-link">
-              <span class="lang-en">View project &rsaquo;</span>
-              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
-            </a>
-          </div>
-
-          <!-- Project 18 -->
+          <!-- Project 4: Sarelle -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
               <img src="assets/project_18.webp" alt="Sarelle Cover" class="portfolio-img">
@@ -718,59 +492,87 @@
             </a>
           </div>
 
-          <!-- Project 19 -->
+          <!-- Project 5: ISUZU -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_19.webp" alt="Genetically Modified Organisms Cover" class="portfolio-img">
+              <img src="assets/project_9.webp" alt="ISUZU Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Genetically Modified Organisms</h3>
+            <h3 class="portfolio-title">ISUZU</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Social Awareness Poster Design</span>
-              <span class="lang-tr">Sosyal Farkındalık Afiş Tasarımı</span>
+              <span class="lang-en">Corporate Campaign Art Direction</span>
+              <span class="lang-tr">Kurumsal Kampanya Sanat Yönetimi</span>
             </p>
-            <a href="https://www.behance.net/gallery/97638385/Genetically-Modified-Organisms" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/78806113/ISUZU" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-          <!-- Project 20 -->
+          <!-- Project 6: Bilyoner -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_20.webp" alt="Kinyas ve Kayra Cover" class="portfolio-img">
+              <img src="assets/project_16.webp" alt="Bilyoner Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Kinyas ve Kayra</h3>
+            <h3 class="portfolio-title">Bilyoner</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Creative Book Cover Illustration</span>
-              <span class="lang-tr">Kreatif Kitap Kapağı İllüstrasyonu</span>
+              <span class="lang-en">Digital Advertising & Campaign Assets</span>
+              <span class="lang-tr">Dijital Reklam & Kampanya Varlıkları</span>
             </p>
-            <a href="https://www.behance.net/gallery/58913791/Kinyas-ve-Kayra-Book-Cover-Design" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/78738767/Bilyoner" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-
-
-          <!-- Project 22 -->
+          <!-- Project 7: Arko Men -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_22.webp" alt="Albaraka Cover" class="portfolio-img">
+              <img src="assets/project_17.webp" alt="Arko Men Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Albaraka</h3>
+            <h3 class="portfolio-title">Arko Men</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Financial Product Campaign Art Direction</span>
-              <span class="lang-tr">Finansal Ürün Kampanyası Sanat Yönetimi</span>
+              <span class="lang-en">Brand Launch & Commercial Campaign</span>
+              <span class="lang-tr">Marka Lansmanı & Reklam Kampanyası</span>
             </p>
-            <a href="https://www.behance.net/gallery/78835913/albaraka-karl-hesap" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/77655477/Arko-Men" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
+          <!-- Project 8: Sırma -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_13.webp" alt="Sırma Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Sırma</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Premium Brand & Visual Identity</span>
+              <span class="lang-tr">Premium Marka & Görsel Kimlik</span>
+            </p>
+            <a href="https://www.behance.net/gallery/78070785/Srma" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
 
+          <!-- Project 9: Letgo -->
+          <div class="portfolio-slide-card card-letgo">
+            <div class="portfolio-img-container">
+              <img src="assets/project_10.webp" alt="Letgo Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Letgo</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">"Öğrenciye Eşya" Social Impact Project</span>
+              <span class="lang-tr">"Öğrenciye Eşya" Sosyal Etki Projesi</span>
+            </p>
+            <a href="https://www.behance.net/gallery/80040463/Letgo-OEgrenciye-Esya" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
 
-          <!-- Project 25 -->
+          <!-- Project 10: Doritos -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
               <img src="assets/project_25.webp" alt="Doritos Cover" class="portfolio-img">
@@ -786,79 +588,182 @@
             </a>
           </div>
 
-          <!-- Project 26 -->
+          <!-- Project 11: İstegelsin -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_26.webp" alt="Motor Festival of Light Cover" class="portfolio-img">
+              <img src="assets/project_5.webp" alt="İstegelsin Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Motor Festival of Light</h3>
+            <h3 class="portfolio-title">İstegelsin</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Event Visual Identity & Poster Design</span>
-              <span class="lang-tr">Etkinlik Görsel Kimliği & Afiş Tasarımı</span>
+              <span class="lang-en">Creative Operations & Visual Strategy</span>
+              <span class="lang-tr">Kreatif Operasyonlar & Görsel Strateji</span>
             </p>
-            <a href="https://www.behance.net/gallery/57965235/MOTOR-FESTIVAL-OF-LIGHT" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/102496333/istegelsin" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-
-
-          <!-- Project 28 -->
+          <!-- Project 12: Nine West -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_28.webp" alt="Gillette Cover" class="portfolio-img">
+              <img src="assets/project_6.webp" alt="Nine West Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Gillette</h3>
+            <h3 class="portfolio-title">Nine West</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Corporate Advertising Campaign Assets</span>
-              <span class="lang-tr">Kurumsal Reklam Kampanyası Varlıkları</span>
+              <span class="lang-en">International Women's Day Campaign</span>
+              <span class="lang-tr">Dünya Kadınlar Günü Kampanyası</span>
             </p>
-            <a href="https://www.behance.net/gallery/58485691/gillette" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/102573941/Nine-West-Kadnlar-Guenue" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-
-          <!-- Project 31 -->
+          <!-- Project 13: Kim O? -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_31.webp" alt="Yatsan Cover" class="portfolio-img">
+              <img src="assets/projects/253695327/cover.png" alt="Kim O? Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Yatsan</h3>
+            <h3 class="portfolio-title">Kim O?</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Social Media Visual Art Direction</span>
-              <span class="lang-tr">Sosyal Medya Görsel Sanat Yönetimi</span>
+              <span class="lang-en">Brand Identity & Logo Design</span>
+              <span class="lang-tr">Brand Identity & Logo Design</span>
             </p>
-            <a href="https://www.behance.net/gallery/58544905/yatsan-post" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/253695327/Kim-O" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">View project &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 14: Pineapple NFT Collection -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/projects/pineapple_nft/2.jpg" alt="Pineapple NFT Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Pineapple NFT Collection</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Character Design &amp; Illustration Project</span>
+              <span class="lang-tr">Karakter Tasarımı &amp; İllüstrasyon Projesi</span>
+            </p>
+            <a href="https://www.behance.net/gallery/999999999/pineapple-nft" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-          <!-- Project 32 -->
+          <!-- Project 15: HXZ -->
           <div class="portfolio-slide-card">
             <div class="portfolio-img-container">
-              <img src="assets/project_32.webp" alt="Hürriyet Cover" class="portfolio-img">
+              <img src="assets/project_4.webp" alt="HXZ Cover" class="portfolio-img">
             </div>
-            <h3 class="portfolio-title">Hürriyet</h3>
+            <h3 class="portfolio-title">HXZ</h3>
             <p class="portfolio-desc">
-              <span class="lang-en">Autism Awareness Social Impact Poster</span>
-              <span class="lang-tr">Otizm Farkındalığı Sosyal Etki Afişi</span>
+              <span class="lang-en">Outdoor Packaging & Advertising Design</span>
+              <span class="lang-tr">Açıkhava Ambalaj & Reklam Tasarımı</span>
             </p>
-            <a href="https://www.behance.net/gallery/58523851/Huerriyet-Otizm-Poster" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+            <a href="https://www.behance.net/gallery/58301571/HXZ-Fish-Oil-Outdoor-Design" target="_blank" rel="noopener noreferrer" class="portfolio-link">
               <span class="lang-en">View project &rsaquo;</span>
               <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
             </a>
           </div>
 
-
-
-
-
-
+          <!-- Project 16: Albaraka -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_22.webp" alt="Albaraka Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Albaraka</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Financial Product Campaign Art Direction</span>
+              <span class="lang-tr">Finansal Ürün Kampanyası Sanat Yönetimi</span>
+            </p>
+            <a href="https://www.behance.net/gallery/78835913/albaraka-karl-hesap" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
           </div>
+
+          <!-- Project 17: Öğrenci Filmleri -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_14.webp" alt="Öğrenci Filmleri Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Öğrenci Filmleri</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Competition Poster Design</span>
+              <span class="lang-tr">Yarışma Afiş Tasarımı</span>
+            </p>
+            <a href="https://www.behance.net/gallery/57383549/OEgrenci-Filmleri-Yarsma-Afisi" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 18: Oda Short Film -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_15.webp" alt="Oda Short Film Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Oda Short Film</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Short Film Art Direction & Poster</span>
+              <span class="lang-tr">Kısa Film Sanat Yönetimi & Afiş</span>
+            </p>
+            <a href="https://www.behance.net/gallery/91118795/oda-short-film" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 19: Genetically Modified Organisms -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_19.webp" alt="Genetically Modified Organisms Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Genetically Modified Organisms</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Social Awareness Poster Design</span>
+              <span class="lang-tr">Sosyal Farkındalık Afiş Tasarımı</span>
+            </p>
+            <a href="https://www.behance.net/gallery/97638385/Genetically-Modified-Organisms" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 20: Kinyas ve Kayra -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/project_20.webp" alt="Kinyas ve Kayra Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">Kinyas ve Kayra</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Creative Book Cover Illustration</span>
+              <span class="lang-tr">Kreatif Kitap Kapağı İllüstrasyonu</span>
+            </p>
+            <a href="https://www.behance.net/gallery/58913791/Kinyas-ve-Kayra-Book-Cover-Design" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+
+          <!-- Project 21: Graphic Activism -->
+          <div class="portfolio-slide-card">
+            <div class="portfolio-img-container">
+              <img src="assets/projects/graphic_activism/still_human_2026_ani_kutusu.jpg" alt="Graphic Activism Cover" class="portfolio-img">
+            </div>
+            <h3 class="portfolio-title">GRAPHIC ACTIVISM</h3>
+            <p class="portfolio-desc">
+              <span class="lang-en">Social Responsibility &amp; Poster Design</span>
+              <span class="lang-tr">Sosyal Sorumluluk &amp; Afiş Tasarımı</span>
+            </p>
+            <a href="https://www.behance.net/gallery/888888888/graphic-activism" target="_blank" rel="noopener noreferrer" class="portfolio-link">
+              <span class="lang-en">View project &rsaquo;</span>
+              <span class="lang-tr">Projeyi İnceleyin &rsaquo;</span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Carousel Navigation buttons centered below slider -->
@@ -1247,6 +1152,6 @@
     </div>
   </div>
 
-  <script src="main_v1.js"></script>
+  <script src="main_v11.js"></script>
 </body>
 </html>

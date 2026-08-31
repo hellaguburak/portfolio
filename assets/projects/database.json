@@ -295,35 +295,6 @@
       }
     ]
   },
-  "84812039": {
-    "dominantColor": "hsla(185, 24%, 22%, 0.96)",
-    "modules": [
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_1.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_2.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_3.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_4.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_5.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/84812039/image_6.gif"
-      }
-    ]
-  },
   "78070785": {
     "dominantColor": "#0f0305",
     "modules": [
@@ -572,23 +543,6 @@
       }
     ]
   },
-  "57965235": {
-    "dominantColor": "#000000",
-    "modules": [
-      {
-        "type": "image",
-        "src": "assets/projects/57965235/image_1.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/57965235/image_2.gif"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/57965235/image_3.webp"
-      }
-    ]
-  },
   "57874115": {
     "dominantColor": "hsla(356, 55%, 15%, 0.96)",
     "modules": [
@@ -599,19 +553,6 @@
       {
         "type": "video",
         "embed": "<div class=\"embed-dimensions\" style=\"max-width: 1200px; max-height: 675px; margin: 0 auto;\">\n    <div class=\"embed-aspect-ratio\" style=\"padding-bottom: 56.25%; position: relative; height: 0px;\">\n        <iframe title=\"Audio/Video Player\" class=\"embed-content\" src=\"https://www-ccv.adobe.io/v1/player/ccv/LhT2nrzXJD8/embed?api_key=behance1&bgcolor=%23191919\" frameborder=\"0\" allowfullscreen style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\"></iframe>\n    </div>\n    </div>"
-      }
-    ]
-  },
-  "58485691": {
-    "dominantColor": "#ffffff",
-    "modules": [
-      {
-        "type": "image",
-        "src": "assets/projects/58485691/image_1.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/58485691/image_2.webp"
       }
     ]
   },
@@ -637,36 +578,6 @@
       {
         "type": "video",
         "embed": "<div class=\"embed-dimensions\" style=\"max-width: 1200px; max-height: 675px; margin: 0 auto;\">\n    <div class=\"embed-aspect-ratio\" style=\"padding-bottom: 56.25%; position: relative; height: 0px;\">\n        <iframe title=\"Audio/Video Player\" class=\"embed-content\" src=\"https://www-ccv.adobe.io/v1/player/ccv/Fs6PvY8gCTS/embed?api_key=behance1&bgcolor=%23191919\" frameborder=\"0\" allowfullscreen style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\"></iframe>\n    </div>\n    </div>"
-      }
-    ]
-  },
-  "58544905": {
-    "dominantColor": "hsla(76, 24%, 22%, 0.96)",
-    "modules": [
-      {
-        "type": "image",
-        "src": "assets/projects/58544905/image_1.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/58544905/image_2.webp"
-      }
-    ]
-  },
-  "58523851": {
-    "dominantColor": "hsla(216, 24%, 22%, 0.96)",
-    "modules": [
-      {
-        "type": "image",
-        "src": "assets/projects/58523851/image_1.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/58523851/image_2.webp"
-      },
-      {
-        "type": "image",
-        "src": "assets/projects/58523851/image_3.webp"
       }
     ]
   },
