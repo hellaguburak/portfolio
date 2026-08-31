@@ -1,4 +1,14 @@
 {
+  "255047005": {
+    "dominantColor": "#1a1a1a",
+    "flushLayout": true,
+    "modules": [
+      {
+        "type": "image",
+        "src": "assets/projects/255047005/image_1.png"
+      }
+    ]
+  },
   "206242029": {
     "dominantColor": "#000000",
     "modules": [
