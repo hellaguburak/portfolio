@@ -1177,18 +1177,31 @@ footer {
 
 /* Responsive Overrides for Mobile Storyboard */
 @media (max-width: 991px) {
+  #about,
+  #portfolio,
+  #experience,
+  #contact,
+  footer {
+    position: relative !important;
+    z-index: 20 !important;
+    background-color: var(--bg-primary);
+  }
+
   #about.storyboard-section,
   .storyboard-section {
+    position: relative !important;
+    z-index: 20 !important;
+    background-color: #ebebe8 !important;
     height: auto !important;
     min-height: auto !important;
     padding: 3rem 1.25rem !important;
-    overflow: visible !important;
-    position: static !important;
+    overflow: hidden !important;
+    width: 100% !important;
   }
   #about .storyboard-scroll-container,
   .storyboard-scroll-container {
     height: auto !important;
-    position: static !important;
+    position: relative !important;
   }
   #about .storyboard-sticky-content,
   .storyboard-sticky-content {

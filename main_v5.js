@@ -873,11 +873,13 @@ function initHeroScrollAnimation() {
     // Set variable on root document element so all selectors can reference it
     document.documentElement.style.setProperty('--scroll-progress', progress);
     
-    // Calculate middle text opacity: fades in between 0.15 and 0.5, then remains at 1
+    // Calculate middle text opacity: fades in between 0.15 and 0.45, then fades out between 0.7 and 1.0
     if (middleText) {
       let middleOpacity = 0;
-      if (progress > 0.15) {
+      if (progress > 0.15 && progress <= 0.7) {
         middleOpacity = Math.min(1, (progress - 0.15) / 0.35);
+      } else if (progress > 0.7) {
+        middleOpacity = Math.max(0, 1 - (progress - 0.7) / 0.25);
       }
       middleText.style.opacity = middleOpacity;
       middleText.style.transform = `translate(-50%, -50%) scale(${0.95 + middleOpacity * 0.05})`;
