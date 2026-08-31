@@ -3670,6 +3670,35 @@ body.modal-open {
   transform: translateY(0);
 }
 
+/* Çilek Project Modal (#d93a35 Background & Crisp White Typography) */
+.modal-content-wrapper.project-255047005 {
+  background-color: #d93a35 !important;
+}
+
+.modal-content-wrapper.project-255047005 .modal-project-title,
+.modal-content-wrapper.project-255047005 .modal-project-desc,
+.modal-content-wrapper.project-255047005 .footer-detail-label,
+.modal-content-wrapper.project-255047005 .footer-detail-value,
+.modal-content-wrapper.project-255047005 .modal-section-grid,
+.modal-content-wrapper.project-255047005 .modal-project-story,
+.modal-content-wrapper.project-255047005 .modal-text-module {
+  color: #ffffff !important;
+}
+
+.modal-content-wrapper.project-255047005 .modal-project-desc {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.modal-content-wrapper.project-255047005 .footer-detail-label {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.modal-content-wrapper.project-255047005 .modal-gallery.flush-layout .modal-video-container {
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 /* Responsive Scaling for Mobile Screens (Compact & Minimal) */
 @media (max-width: 768px) {
   .modal-section-grid {
