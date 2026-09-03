@@ -2187,6 +2187,8 @@ function initBriefTicketStudio() {
   const closeSuccessBtn = document.getElementById('btn-close-success');
   const copyBtn = document.getElementById('btn-copy-ticket');
 
+  const modalHeader = document.getElementById('brief-modal-header');
+
   if (!modal || !openBtn) return;
 
   // Open Modal
@@ -2194,6 +2196,7 @@ function initBriefTicketStudio() {
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    if (modalHeader) modalHeader.classList.remove('hidden');
     const isTr = document.body.classList.contains('lang-tr');
     document.querySelectorAll('[data-placeholder-en][data-placeholder-tr]').forEach(el => {
       el.placeholder = isTr ? el.getAttribute('data-placeholder-tr') : el.getAttribute('data-placeholder-en');
@@ -2437,7 +2440,8 @@ Portfolio: https://burakhellagu.com
         `;
       }
 
-      // Switch to Success View
+      // Switch to Success View & Hide Modal Header
+      if (modalHeader) modalHeader.classList.add('hidden');
       form.classList.add('hidden');
       successView.classList.remove('hidden');
 
@@ -2471,6 +2475,7 @@ Portfolio: https://burakhellagu.com
     closeSuccessBtn.addEventListener('click', () => {
       closeModal();
       setTimeout(() => {
+        if (modalHeader) modalHeader.classList.remove('hidden');
         if (form && successView) {
           form.reset();
           form.classList.remove('hidden');

@@ -5255,26 +5255,27 @@ body.modal-open {
 }
 
 .success-motion-icon {
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 1.5rem auto;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.8rem auto;
 }
 
 .checkmark-svg {
-  width: 68px;
-  height: 68px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   display: block;
-  stroke-width: 3;
+  stroke-width: 3.5;
   stroke: #4bb543;
   stroke-miterlimit: 10;
+  box-shadow: 0 0 35px rgba(75, 181, 67, 0.22);
   animation: scaleCheck 0.3s ease-in-out 0.8s both;
 }
 
 .checkmark-circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
-  stroke-width: 3;
+  stroke-width: 3.5;
   stroke-miterlimit: 10;
   stroke: #4bb543;
   fill: none;
