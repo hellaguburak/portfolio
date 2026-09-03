@@ -4736,6 +4736,7 @@ body.modal-open {
   height: 100vh;
   z-index: 99999;
   display: none;
+  visibility: hidden;
   align-items: center;
   justify-content: center;
   opacity: 0;
@@ -4745,6 +4746,7 @@ body.modal-open {
 
 .brief-modal.active {
   display: flex;
+  visibility: visible;
   opacity: 1;
   pointer-events: all;
 }

@@ -4,26 +4,34 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initStickyHeader();
-  initScrollAnimations();
-  initFormHandler();
-  initSmoothScroll();
-  initParallaxBackground();
-  initPortfolioSlider();
-  initInteractivePortfolioCards();
-  initPortfolioHeaderScrollAnimation();
-  initExperienceSyncScroll();
-  initMouseGlowAndRipples();
-  initSmokeTypography();
-  initSuiTransition();
-  initCardReflections();
-  initHeroScrollAnimation();
-  initMinimapNavigation();
-  initViewfinderDynamics();
-  initHeaderScrollSpy();
-  initPhilosophyStoryboard();
-  initProjectGalleryModal();
-  initBriefTicketStudio();
+  const safeInit = (fn, name) => {
+    try {
+      if (typeof fn === 'function') fn();
+    } catch (err) {
+      console.error(`Error initializing ${name}:`, err);
+    }
+  };
+
+  safeInit(initStickyHeader, 'StickyHeader');
+  safeInit(initScrollAnimations, 'ScrollAnimations');
+  safeInit(initFormHandler, 'FormHandler');
+  safeInit(initSmoothScroll, 'SmoothScroll');
+  safeInit(initParallaxBackground, 'ParallaxBackground');
+  safeInit(initPortfolioSlider, 'PortfolioSlider');
+  safeInit(initInteractivePortfolioCards, 'InteractivePortfolioCards');
+  safeInit(initPortfolioHeaderScrollAnimation, 'PortfolioHeaderScrollAnimation');
+  safeInit(initExperienceSyncScroll, 'ExperienceSyncScroll');
+  safeInit(initMouseGlowAndRipples, 'MouseGlowAndRipples');
+  safeInit(initSmokeTypography, 'SmokeTypography');
+  safeInit(initSuiTransition, 'SuiTransition');
+  safeInit(initCardReflections, 'CardReflections');
+  safeInit(initHeroScrollAnimation, 'HeroScrollAnimation');
+  safeInit(initMinimapNavigation, 'MinimapNavigation');
+  safeInit(initViewfinderDynamics, 'ViewfinderDynamics');
+  safeInit(initHeaderScrollSpy, 'HeaderScrollSpy');
+  safeInit(initPhilosophyStoryboard, 'PhilosophyStoryboard');
+  safeInit(initProjectGalleryModal, 'ProjectGalleryModal');
+  safeInit(initBriefTicketStudio, 'BriefTicketStudio');
 });
 
 /**
@@ -1744,39 +1752,52 @@ function initProjectGalleryModal() {
       galleryContent.appendChild(fallbackImg);
     }
     
-    // Populate footer area
-    projectFooter.innerHTML = `
-      <div class="footer-details-grid">
-        <div class="footer-detail-item">
-          <span class="footer-detail-label">Project / Proje</span>
-          <span class="footer-detail-value">${title}</span>
-        </div>
-        <div class="footer-detail-item">
-          <span class="footer-detail-label">Creative / Kreatif</span>
-          <span class="footer-detail-value">
-            <span class="lang-en">Burak Hellagu</span>
-            <span class="lang-tr">Burak Hellagü</span>
-          </span>
-        </div>
-      </div>
-      <button class="modal-contact-cta-btn" id="modal-footer-contact-btn">
-        <span class="lang-en">Start a Project &rsaquo;</span>
-        <span class="lang-tr">Proje Başlatın &rsaquo;</span>
-      </button>
-    `;
+    // Open modal immediately
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    if (closeBtn) {
+      setTimeout(() => {
+        try { closeBtn.focus(); } catch (e) {}
+      }, 100);
+    }
 
-    // Bind click handler for Contact button
-    const footerContactBtn = document.getElementById('modal-footer-contact-btn');
-    if (footerContactBtn) {
-      footerContactBtn.addEventListener('click', () => {
-        closeModal();
-        setTimeout(() => {
-          const contactSection = document.getElementById('contact');
-          if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 400);
-      });
+    // Populate footer area
+    const pFooter = projectFooter || document.getElementById('modal-project-footer');
+    if (pFooter) {
+      pFooter.innerHTML = `
+        <div class="footer-details-grid">
+          <div class="footer-detail-item">
+            <span class="footer-detail-label">Project / Proje</span>
+            <span class="footer-detail-value">${title}</span>
+          </div>
+          <div class="footer-detail-item">
+            <span class="footer-detail-label">Creative / Kreatif</span>
+            <span class="footer-detail-value">
+              <span class="lang-en">Burak Hellagu</span>
+              <span class="lang-tr">Burak Hellagü</span>
+            </span>
+          </div>
+        </div>
+        <button class="modal-contact-cta-btn" id="modal-footer-contact-btn">
+          <span class="lang-en">Start a Project &rsaquo;</span>
+          <span class="lang-tr">Proje Başlatın &rsaquo;</span>
+        </button>
+      `;
+
+      // Bind click handler for Contact button
+      const footerContactBtn = document.getElementById('modal-footer-contact-btn');
+      if (footerContactBtn) {
+        footerContactBtn.addEventListener('click', () => {
+          closeModal();
+          setTimeout(() => {
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 400);
+        });
+      }
     }
     
     // Force update of language overlays for new button nodes inside the footer
@@ -1785,59 +1806,53 @@ function initProjectGalleryModal() {
     }
     
     // Set up scroll-reveal IntersectionObserver inside modal container
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal-active');
-          
-          if (entry.target.classList.contains('modal-video-container')) {
-            const iframe = entry.target.querySelector('iframe');
-            if (iframe && iframe.src && !iframe.src.includes('autoplay=')) {
-              let separator = iframe.src.includes('?') ? '&' : '?';
-              iframe.setAttribute('allow', 'autoplay');
-              iframe.src = iframe.src + separator + 'autoplay=1&muted=1';
+    if (modalContainer && galleryContent) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+            
+            if (entry.target.classList.contains('modal-video-container')) {
+              const iframe = entry.target.querySelector('iframe');
+              if (iframe && iframe.src && !iframe.src.includes('autoplay=')) {
+                let separator = iframe.src.includes('?') ? '&' : '?';
+                iframe.setAttribute('allow', 'autoplay');
+                iframe.src = iframe.src + separator + 'autoplay=1&muted=1';
+              }
             }
+            
+            observer.unobserve(entry.target);
           }
-          
-          observer.unobserve(entry.target);
-        }
+        });
+      }, {
+        root: modalContainer,
+        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.02
       });
-    }, {
-      root: modalContainer,
-      rootMargin: '0px 0px -8% 0px',
-      threshold: 0.02
-    });
-    
-    // Observe all elements inside the gallery container
-    setTimeout(() => {
-      const revealItems = galleryContent.querySelectorAll('img, .modal-video-container, .modal-section-header, .modal-text-module, .activism-label');
-      revealItems.forEach(item => {
-        revealObserver.observe(item);
-      });
-    }, 50);
+      
+      // Observe all elements inside the gallery container
+      setTimeout(() => {
+        const revealItems = galleryContent.querySelectorAll('img, .modal-video-container, .modal-section-header, .modal-text-module, .activism-label');
+        revealItems.forEach(item => {
+          revealObserver.observe(item);
+        });
+      }, 50);
+    }
     
     // Bind click-to-zoom event listeners on newly generated image nodes
-    setTimeout(() => {
-      const images = galleryContent.querySelectorAll('img');
-      images.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          lightboxImg.src = img.src;
-          lightbox.classList.add('active');
-          lightbox.setAttribute('aria-hidden', 'false');
+    if (lightbox && lightboxImg && galleryContent) {
+      setTimeout(() => {
+        const images = galleryContent.querySelectorAll('img');
+        images.forEach(img => {
+          img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+          });
         });
-      });
-    }, 100);
-    
-    // Open modal
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
-    
-    // Focus close button
-    setTimeout(() => {
-      closeBtn.focus();
-    }, 100);
+      }, 100);
+    }
   };
 
   // Bind click handlers to cards via delegation on the track parent
