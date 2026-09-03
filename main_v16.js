@@ -2440,6 +2440,48 @@ Portfolio: https://burakhellagu.com
         `;
       }
 
+      // Send Email in Background to hello@burakhellagu.com & hellaguburak@gmail.com
+      try {
+        fetch('https://formsubmit.co/ajax/hello@burakhellagu.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `[Brief Ticket ${ticketId}] ${brandName}`,
+            _replyto: contactEmail,
+            _cc: 'hellaguburak@gmail.com',
+            Ticket_ID: ticketId,
+            Brand_Company: brandName,
+            Contact_Person: contactName,
+            Email: contactEmail,
+            Phone: contactPhone,
+            Deliverables: deliverables,
+            Strategic_Insight: strategyText,
+            Headline: headlineText,
+            Body_Copy: bodyText,
+            Badge: badgeText,
+            Legal_Fine_Print: legalText,
+            Channels_Aspect_Ratios: channels,
+            Custom_Dimensions: customDimensions,
+            Assets_Cloud_Link: cloudLink,
+            Advance_Terms_Consent: 'Accepted & Confirmed',
+            Full_Ticket_Summary: currentTicketSummary
+          })
+        }).catch(err => console.log('Email delivery dispatch:', err));
+      } catch (err) {
+        console.log('Dispatch error:', err);
+      }
+
+      // Configure Direct Email Link for Client Mail App
+      const emailTicketBtn = document.getElementById('btn-email-ticket');
+      if (emailTicketBtn) {
+        const mailSubject = encodeURIComponent(`[Creative Brief Ticket ${ticketId}] ${brandName}`);
+        const mailBody = encodeURIComponent(currentTicketSummary);
+        emailTicketBtn.href = `mailto:hello@burakhellagu.com?cc=hellaguburak@gmail.com&subject=${mailSubject}&body=${mailBody}`;
+      }
+
       // Switch to Success View & Hide Modal Header
       if (modalHeader) modalHeader.classList.add('hidden');
       form.classList.add('hidden');
