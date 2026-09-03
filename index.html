@@ -1313,8 +1313,12 @@
                   <span class="lang-tr">Gövde metnim hazır</span>
                 </button>
                 <button type="button" class="choice-tab" data-mode="propose">
-                  <span class="lang-en">Propose body copy structure</span>
-                  <span class="lang-tr">Metin kurgusunu sen öner</span>
+                  <span class="lang-en">Propose copy structure</span>
+                  <span class="lang-tr">Metin kurgusu öner</span>
+                </button>
+                <button type="button" class="choice-tab" data-mode="none">
+                  <span class="lang-en">No body copy needed</span>
+                  <span class="lang-tr">Tasarımda metin istenmiyor</span>
                 </button>
               </div>
               <div class="brief-input-subbox" id="bt-body-custom-box">
@@ -1324,6 +1328,12 @@
                 <p class="subbox-hint">
                   <span class="lang-en">A concise brand narrative will be crafted to accompany the visual composition.</span>
                   <span class="lang-tr">Görseli destekleyecek net ve vurucu bir metin kurgusu oluşturulacaktır.</span>
+                </p>
+              </div>
+              <div class="brief-input-subbox hidden" id="bt-body-none-box">
+                <p class="subbox-hint">
+                  <span class="lang-en">Visual-first layout. The composition will focus purely on key visual aesthetics and core branding without body text.</span>
+                  <span class="lang-tr">Görsel odaklı tasarım. Kompozisyon gövde metni olmadan doğrudan ana görsel estetiğe ve markaya odaklanacaktır.</span>
                 </p>
               </div>
             </div>
@@ -1547,6 +1557,7 @@
 
         <!-- Success Screen (Hidden by default, shown upon submit) -->
         <div class="brief-success-view hidden" id="brief-success-view">
+          <canvas id="brief-confetti-canvas" class="brief-confetti-canvas"></canvas>
           <div class="success-motion-icon">
             <svg class="checkmark-svg" viewBox="0 0 52 52">
               <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>

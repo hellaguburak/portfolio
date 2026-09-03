@@ -5313,8 +5313,19 @@ body.modal-open {
    BRIEF SUCCESS VIEW & MOTION CHECKMARK
    ================================================== */
 .brief-success-view {
+  position: relative;
   text-align: center;
   padding: 2.5rem 1rem;
+}
+
+.brief-confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
 }
 
 .success-motion-icon {

@@ -2262,10 +2262,11 @@ function initBriefTicketStudio() {
     });
   }
 
-  // 3. Body Copy Strategy Choice Tabs
+  // 3. Body Copy Choice Tabs (Custom / Propose / None)
   const bodyTabs = document.getElementById('bt-body-mode-tabs');
   const bodyCustomBox = document.getElementById('bt-body-custom-box');
   const bodyProposeBox = document.getElementById('bt-body-propose-box');
+  const bodyNoneBox = document.getElementById('bt-body-none-box');
   const bodyInput = document.getElementById('bt-body-input');
 
   if (bodyTabs) {
@@ -2276,12 +2277,18 @@ function initBriefTicketStudio() {
         tab.classList.add('active');
         const mode = tab.getAttribute('data-mode');
         if (mode === 'custom') {
-          bodyCustomBox.classList.remove('hidden');
-          bodyProposeBox.classList.add('hidden');
+          if (bodyCustomBox) bodyCustomBox.classList.remove('hidden');
+          if (bodyProposeBox) bodyProposeBox.classList.add('hidden');
+          if (bodyNoneBox) bodyNoneBox.classList.add('hidden');
           if (bodyInput) bodyInput.focus();
+        } else if (mode === 'propose') {
+          if (bodyCustomBox) bodyCustomBox.classList.add('hidden');
+          if (bodyProposeBox) bodyProposeBox.classList.remove('hidden');
+          if (bodyNoneBox) bodyNoneBox.classList.add('hidden');
         } else {
-          bodyCustomBox.classList.add('hidden');
-          bodyProposeBox.classList.remove('hidden');
+          if (bodyCustomBox) bodyCustomBox.classList.add('hidden');
+          if (bodyProposeBox) bodyProposeBox.classList.add('hidden');
+          if (bodyNoneBox) bodyNoneBox.classList.remove('hidden');
         }
       });
     });
@@ -2431,9 +2438,14 @@ function initBriefTicketStudio() {
 
       // Body Copy
       const activeBodyTab = bodyTabs ? bodyTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
-      const bodyText = activeBodyTab === 'custom'
-        ? (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : (isTr ? 'Girilmedi' : 'None provided'))
-        : (isTr ? 'Etkili marka metin kurgusu Burak Hellagü\'den talep edildi' : 'Brand narrative structure requested from Burak Hellagu');
+      let bodyText = '';
+      if (activeBodyTab === 'custom') {
+        bodyText = (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : (isTr ? 'Girilmedi' : 'None provided'));
+      } else if (activeBodyTab === 'propose') {
+        bodyText = isTr ? 'Etkili marka metin kurgusu Burak Hellagü\'den talep edildi' : 'Brand narrative structure requested from Burak Hellagu';
+      } else {
+        bodyText = isTr ? 'Tasarımda metin istenmiyor (Yalnızca görsel odaklı)' : 'No body copy needed (Visual-first layout)';
+      }
 
       const strategyText = (document.getElementById('bt-strategy-input') ? document.getElementById('bt-strategy-input').value.trim() : '') || (isTr ? 'Belirtilmedi' : 'Not specified');
       const badgeText = document.getElementById('bt-badge-input').value.trim() || (isTr ? 'Yok' : 'None');
@@ -2529,6 +2541,7 @@ Portfolio: https://burakhellagu.com
           <p><strong>${isTr ? 'Yetkili' : 'Contact'}:</strong> ${contactName} (${contactEmail})</p>
           <p><strong>${isTr ? 'Çıktılar' : 'Deliverables'}:</strong> ${deliverables}</p>
           <p><strong>${isTr ? 'Başlık' : 'Headline'}:</strong> ${headlineText}</p>
+          <p><strong>${isTr ? 'Gövde Metni' : 'Body Copy'}:</strong> ${bodyText}</p>
           <p><strong>${isTr ? 'Mecralar' : 'Channels'}:</strong> ${channels}</p>
           <p><strong>${isTr ? 'Materyaller' : 'Assets'}:</strong> ${cloudLink.startsWith('http') ? `<a href="${cloudLink}" target="_blank" style="color: #c5a059; text-decoration: underline;">${cloudLink}</a>` : cloudLink}</p>
           <p><strong>${isTr ? 'Tarih' : 'Date'}:</strong> ${now}</p>
@@ -2588,10 +2601,93 @@ Portfolio: https://burakhellagu.com
       form.classList.add('hidden');
       successView.classList.remove('hidden');
 
+      // Launch Minimal Luxury Gold Confetti
+      launchMinimalGoldConfetti();
+
       // Scroll modal to top to view success animation
       const modalContainer = modal.querySelector('.brief-modal-container');
       if (modalContainer) modalContainer.scrollTop = 0;
     });
+  }
+
+  // Minimal Luxury Gold Confetti Animation
+  function launchMinimalGoldConfetti() {
+    const canvas = document.getElementById('brief-confetti-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const parent = canvas.parentElement;
+    const width = parent ? parent.offsetWidth : 700;
+    const height = parent ? Math.max(parent.offsetHeight, 600) : 600;
+    canvas.width = width;
+    canvas.height = height;
+
+    const colors = ['#c5a059', '#dfb86c', '#4bb543', '#ffffff', '#fae19c', '#ecd090', '#ffd700'];
+    const particleCount = 75;
+    const particles = [];
+    const originX = width / 2;
+    const originY = 85; // Around checkmark icon
+
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (Math.random() * Math.PI * 1.4) + (Math.PI * 0.8); // broad upward cone
+      const speed = 3 + Math.random() * 8;
+      particles.push({
+        x: originX + (Math.random() - 0.5) * 50,
+        y: originY + (Math.random() - 0.5) * 30,
+        vx: Math.cos(angle) * speed * 1.1,
+        vy: Math.sin(angle) * speed - 2.5,
+        size: 3 + Math.random() * 4.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 14,
+        opacity: 1,
+        decay: 0.007 + Math.random() * 0.008,
+        shape: Math.random() > 0.35 ? 'rect' : 'circle'
+      });
+    }
+
+    let animationId;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = 0;
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.17; // soft gravity
+        p.vx *= 0.982; // air drag
+        p.rotation += p.rotationSpeed;
+        p.opacity -= p.decay;
+
+        if (p.opacity > 0) {
+          alive++;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      });
+
+      if (alive > 0) {
+        animationId = requestAnimationFrame(draw);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        cancelAnimationFrame(animationId);
+      }
+    }
+
+    draw();
   }
 
   // Copy Ticket Button
