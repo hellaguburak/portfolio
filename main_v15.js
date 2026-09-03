@@ -2423,11 +2423,20 @@ function initBriefTicketStudio() {
         return;
       }
       
-      // Headline
+      // Headline (Required: either custom text or propose mode)
       const activeHeadlineTab = headlineTabs ? headlineTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
-      const headlineText = activeHeadlineTab === 'custom' 
-        ? (headlineInput && headlineInput.value.trim() ? headlineInput.value.trim() : (isTr ? 'Özel başlık girildi' : 'Custom headline specified'))
-        : (isTr ? 'Yaratıcı başlık & slogan önerisi Burak Hellagü\'den talep edildi' : 'Creative headline & slogan ideation requested from Burak Hellagu');
+      let headlineText = '';
+      if (activeHeadlineTab === 'custom') {
+        const customVal = headlineInput ? headlineInput.value.trim() : '';
+        if (!customVal) {
+          alert(isTr ? 'Lütfen bir ana başlık / slogan yazın veya "Başlık & slogan önerisi istiyorum" seçeneğini seçin.' : 'Please enter your headline or select "Propose creative headline ideas".');
+          if (headlineInput) headlineInput.focus();
+          return;
+        }
+        headlineText = customVal;
+      } else {
+        headlineText = isTr ? 'Yaratıcı başlık & slogan önerisi Burak Hellagü\'den talep edildi' : 'Creative headline & slogan ideation requested from Burak Hellagu';
+      }
 
       // Body Copy
       const activeBodyTab = bodyTabs ? bodyTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
