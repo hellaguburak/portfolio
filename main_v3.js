@@ -2262,10 +2262,9 @@ function initBriefTicketStudio() {
     });
   }
 
-  // 3. Body Copy Choice Tabs (Custom / Propose / None)
+  // 3. Body Copy Choice Tabs (Custom / None)
   const bodyTabs = document.getElementById('bt-body-mode-tabs');
   const bodyCustomBox = document.getElementById('bt-body-custom-box');
-  const bodyProposeBox = document.getElementById('bt-body-propose-box');
   const bodyNoneBox = document.getElementById('bt-body-none-box');
   const bodyInput = document.getElementById('bt-body-input');
 
@@ -2278,16 +2277,10 @@ function initBriefTicketStudio() {
         const mode = tab.getAttribute('data-mode');
         if (mode === 'custom') {
           if (bodyCustomBox) bodyCustomBox.classList.remove('hidden');
-          if (bodyProposeBox) bodyProposeBox.classList.add('hidden');
           if (bodyNoneBox) bodyNoneBox.classList.add('hidden');
           if (bodyInput) bodyInput.focus();
-        } else if (mode === 'propose') {
-          if (bodyCustomBox) bodyCustomBox.classList.add('hidden');
-          if (bodyProposeBox) bodyProposeBox.classList.remove('hidden');
-          if (bodyNoneBox) bodyNoneBox.classList.add('hidden');
         } else {
           if (bodyCustomBox) bodyCustomBox.classList.add('hidden');
-          if (bodyProposeBox) bodyProposeBox.classList.add('hidden');
           if (bodyNoneBox) bodyNoneBox.classList.remove('hidden');
         }
       });
@@ -2438,14 +2431,9 @@ function initBriefTicketStudio() {
 
       // Body Copy
       const activeBodyTab = bodyTabs ? bodyTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
-      let bodyText = '';
-      if (activeBodyTab === 'custom') {
-        bodyText = (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : (isTr ? 'Girilmedi' : 'None provided'));
-      } else if (activeBodyTab === 'propose') {
-        bodyText = isTr ? 'Etkili marka metin kurgusu Burak Hellagü\'den talep edildi' : 'Brand narrative structure requested from Burak Hellagu';
-      } else {
-        bodyText = isTr ? 'Tasarımda metin istenmiyor (Yalnızca görsel odaklı)' : 'No body copy needed (Visual-first layout)';
-      }
+      const bodyText = activeBodyTab === 'custom'
+        ? (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : (isTr ? 'Girilmedi' : 'None provided'))
+        : (isTr ? 'Tasarımda metin istenmiyor (Yalnızca görsel odaklı)' : 'No body copy needed (Visual-first layout)');
 
       const strategyText = (document.getElementById('bt-strategy-input') ? document.getElementById('bt-strategy-input').value.trim() : '') || (isTr ? 'Belirtilmedi' : 'Not specified');
       const badgeText = document.getElementById('bt-badge-input').value.trim() || (isTr ? 'Yok' : 'None');
