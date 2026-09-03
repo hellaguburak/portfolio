@@ -2201,6 +2201,9 @@ function initBriefTicketStudio() {
     document.querySelectorAll('[data-placeholder-en][data-placeholder-tr]').forEach(el => {
       el.placeholder = isTr ? el.getAttribute('data-placeholder-tr') : el.getAttribute('data-placeholder-en');
     });
+    if (window.location.hash !== '#brief' && window.location.hash !== '#ticket') {
+      try { history.replaceState(null, null, '#brief'); } catch (e) {}
+    }
   };
 
   // Close Modal
@@ -2208,6 +2211,9 @@ function initBriefTicketStudio() {
     modal.classList.remove('active');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
+    if (window.location.hash === '#brief' || window.location.hash === '#ticket') {
+      try { history.replaceState(null, null, window.location.pathname + window.location.search); } catch (e) {}
+    }
   };
 
   openBtn.addEventListener('click', openModal);
@@ -2220,6 +2226,18 @@ function initBriefTicketStudio() {
       closeModal();
     }
   });
+
+  // Auto-open Studio Modal if URL has #brief, #ticket or ?brief parameter
+  const checkUrlAutoOpen = () => {
+    const hash = window.location.hash.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    if (hash.includes('brief') || hash.includes('ticket') || search.includes('brief') || search.includes('ticket')) {
+      setTimeout(openModal, 120);
+    }
+  };
+
+  checkUrlAutoOpen();
+  window.addEventListener('hashchange', checkUrlAutoOpen);
 
   // 1. Deliverables Pill Selection (Multi-select)
   const deliverablesGroup = document.getElementById('bt-deliverables-group');
