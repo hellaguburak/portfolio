@@ -1391,8 +1391,8 @@
             <!-- Signature Gold Submit Button -->
             <div class="brief-submit-wrap">
               <button type="submit" class="btn-brief-submit" id="btn-brief-submit">
-                <span class="lang-en">Create Brief Ticket</span>
-                <span class="lang-tr">Brief Ticket'ı Oluştur</span>
+                <span class="lang-en">Send Brief Ticket</span>
+                <span class="lang-tr">Brief Ticket'ı Gönder</span>
                 <span class="btn-arrow">&rsaquo;</span>
               </button>
               <p class="submit-disclaimer">
@@ -1494,17 +1494,51 @@
               <input type="text" id="bt-custom-dimensions" name="custom_dimensions" placeholder="e.g. 500x350cm, Print Ready PDF, Layered PSD" data-placeholder-en="e.g. 500x350cm, Print Ready PDF, Layered PSD" data-placeholder-tr="Örn. 500x350cm, Baskıya Hazır PDF, Katmanlı PSD" autocomplete="off" spellcheck="false" data-gramm="false">
             </div>
 
-            <!-- Group 4: Assets / Google Drive / WeTransfer / Asset Link -->
+            <!-- Group 4: Brand Assets & Documents (Link or Direct Upload) -->
             <div class="brief-form-group" style="margin-top: 1.2rem;">
-              <label for="bt-cloud-link">
-                <span class="lang-en">Google Drive / WeTransfer / Asset Link</span>
-                <span class="lang-tr">Google Drive / WeTransfer / Materyal Linki</span>
+              <label>
+                <span class="lang-en">Brand Assets & Documents</span>
+                <span class="lang-tr">Marka Materyalleri & Dökümanlar</span>
               </label>
-              <input type="url" id="bt-cloud-link" name="cloud_link" placeholder="https://we.tl/t-XXXXXX or Google Drive folder URL" data-placeholder-en="https://we.tl/t-XXXXXX or Google Drive folder URL" data-placeholder-tr="https://we.tl/t-XXXXXX veya Drive klasör linki" autocomplete="off" spellcheck="false" data-gramm="false">
-              <p class="field-hint">
-                <span class="lang-en">Optional: You can provide vector logos (.AI / .SVG), fonts, brand guidelines, and photos now or share them later.</span>
-                <span class="lang-tr">İsteğe bağlı: Vektörel logo (.AI / .SVG), kurumsal font ve fotoğrafları şimdi ekleyebilir veya daha sonra iletebilirsiniz.</span>
-              </p>
+              <div class="brief-choice-tabs" id="bt-assets-mode-tabs">
+                <button type="button" class="choice-tab active" data-mode="link">
+                  <span class="lang-en">Drive / Cloud Link</span>
+                  <span class="lang-tr">Drive / Bulut Linki</span>
+                </button>
+                <button type="button" class="choice-tab" data-mode="upload">
+                  <span class="lang-en">Direct Upload (Max 25 MB)</span>
+                  <span class="lang-tr">Dosya Yükle (Maks. 25 MB)</span>
+                </button>
+              </div>
+
+              <!-- Mode 1: Cloud Link -->
+              <div class="brief-input-subbox" id="bt-assets-link-box">
+                <input type="url" id="bt-cloud-link" name="cloud_link" placeholder="https://we.tl/t-XXXXXX or Google Drive folder URL" data-placeholder-en="https://we.tl/t-XXXXXX or Google Drive folder URL" data-placeholder-tr="https://we.tl/t-XXXXXX veya Drive klasör linki" autocomplete="off" spellcheck="false" data-gramm="false">
+                <p class="field-hint">
+                  <span class="lang-en">Optional: You can provide vector logos (.AI / .SVG), fonts, brand guidelines, and photos now or share them later.</span>
+                  <span class="lang-tr">İsteğe bağlı: Vektörel logo (.AI / .SVG), kurumsal font ve fotoğrafları şimdi ekleyebilir veya daha sonra iletebilirsiniz.</span>
+                </p>
+              </div>
+
+              <!-- Mode 2: Direct File Upload -->
+              <div class="brief-input-subbox hidden" id="bt-assets-upload-box">
+                <input type="file" id="bt-file-upload" name="attachment" accept=".pdf,.ai,.psd,.eps,.svg,.zip,.png,.jpg,.jpeg,.doc,.docx" style="display: none;">
+                <div class="brief-upload-box" id="bt-upload-trigger">
+                  <div class="upload-box-icon">📎</div>
+                  <div class="upload-box-text">
+                    <span class="lang-en">Click or Drag & Drop to Upload Document</span>
+                    <span class="lang-tr">Döküman Yüklemek İçin Tıklayın veya Sürükleyin</span>
+                  </div>
+                  <div class="upload-box-sub">
+                    <span class="lang-en">PDF, AI, PSD, SVG, ZIP, PNG, JPG — Max 25 MB</span>
+                    <span class="lang-tr">PDF, AI, PSD, SVG, ZIP, PNG, JPG — Maks. 25 MB</span>
+                  </div>
+                  <div class="upload-file-badge hidden" id="bt-upload-badge">
+                    <span id="bt-upload-filename">filename.pdf</span>
+                    <button type="button" class="upload-remove-btn" id="bt-upload-remove" aria-label="Remove file">&times;</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>

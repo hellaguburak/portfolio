@@ -2303,7 +2303,94 @@ function initBriefTicketStudio() {
     });
   }
 
-  // 5. Terms Accordion Toggle
+  // 5. Brand Assets Mode Tabs & File Upload
+  const assetsTabs = document.getElementById('bt-assets-mode-tabs');
+  const assetsLinkBox = document.getElementById('bt-assets-link-box');
+  const assetsUploadBox = document.getElementById('bt-assets-upload-box');
+  const fileInput = document.getElementById('bt-file-upload');
+  const uploadTrigger = document.getElementById('bt-upload-trigger');
+  const uploadBadge = document.getElementById('bt-upload-badge');
+  const uploadFilename = document.getElementById('bt-upload-filename');
+  const uploadRemoveBtn = document.getElementById('bt-upload-remove');
+
+  if (assetsTabs) {
+    const tabs = assetsTabs.querySelectorAll('.choice-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const mode = tab.getAttribute('data-mode');
+        if (mode === 'upload') {
+          if (assetsUploadBox) assetsUploadBox.classList.remove('hidden');
+          if (assetsLinkBox) assetsLinkBox.classList.add('hidden');
+        } else {
+          if (assetsUploadBox) assetsUploadBox.classList.add('hidden');
+          if (assetsLinkBox) assetsLinkBox.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  if (uploadTrigger && fileInput) {
+    uploadTrigger.addEventListener('click', (e) => {
+      if (e.target !== uploadRemoveBtn) {
+        fileInput.click();
+      }
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        if (file.size > 25 * 1024 * 1024) {
+          alert(document.body.classList.contains('lang-tr') ? 'Dosya boyutu 25 MB\'ı aşamaz.' : 'File size cannot exceed 25 MB.');
+          fileInput.value = '';
+          if (uploadBadge) uploadBadge.classList.add('hidden');
+          return;
+        }
+        if (uploadFilename) uploadFilename.textContent = `📎 ${file.name} (${fileSizeMB} MB)`;
+        if (uploadBadge) uploadBadge.classList.remove('hidden');
+      } else {
+        if (uploadBadge) uploadBadge.classList.add('hidden');
+      }
+    });
+
+    // Drag and drop support
+    uploadTrigger.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadTrigger.classList.add('dragover');
+    });
+    uploadTrigger.addEventListener('dragleave', () => {
+      uploadTrigger.classList.remove('dragover');
+    });
+    uploadTrigger.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadTrigger.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        fileInput.files = e.dataTransfer.files;
+        const file = fileInput.files[0];
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        if (file.size > 25 * 1024 * 1024) {
+          alert(document.body.classList.contains('lang-tr') ? 'Dosya boyutu 25 MB\'ı aşamaz.' : 'File size cannot exceed 25 MB.');
+          fileInput.value = '';
+          if (uploadBadge) uploadBadge.classList.add('hidden');
+          return;
+        }
+        if (uploadFilename) uploadFilename.textContent = `📎 ${file.name} (${fileSizeMB} MB)`;
+        if (uploadBadge) uploadBadge.classList.remove('hidden');
+      }
+    });
+
+    if (uploadRemoveBtn) {
+      uploadRemoveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.value = '';
+        if (uploadBadge) uploadBadge.classList.add('hidden');
+      });
+    }
+  }
+
+  // 6. Terms Accordion Toggle
   const termsToggle = document.getElementById('bt-terms-toggle');
   const termsContent = document.getElementById('bt-terms-content');
   if (termsToggle && termsContent) {
@@ -2317,7 +2404,7 @@ function initBriefTicketStudio() {
     });
   }
 
-  // 6. Form Submission & Ticket Generation
+  // 7. Form Submission & Ticket Generation
   let currentTicketSummary = '';
 
   if (form && successView) {
@@ -2353,7 +2440,15 @@ function initBriefTicketStudio() {
       const legalText = document.getElementById('bt-legal-input').value.trim() || (isTr ? 'Yok' : 'None');
       const channels = channelsVal ? channelsVal.value : (isTr ? 'Standart Dijital & Sosyal' : 'Standard Digital & Social');
       const customDimensions = document.getElementById('bt-custom-dimensions').value.trim() || (isTr ? 'Standart formatlar' : 'Standard aspect ratios');
-      const cloudLink = document.getElementById('bt-cloud-link').value.trim() || (isTr ? 'Materyaller e-posta ile iletilecek' : 'Assets to be sent via email');
+      
+      let cloudLink = document.getElementById('bt-cloud-link') ? document.getElementById('bt-cloud-link').value.trim() : '';
+      let attachedFile = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
+
+      if (attachedFile) {
+        cloudLink = isTr ? `Doğrudan Yüklendi: ${attachedFile.name} (${(attachedFile.size / (1024*1024)).toFixed(2)} MB)` : `Directly Uploaded: ${attachedFile.name} (${(attachedFile.size / (1024*1024)).toFixed(2)} MB)`;
+      } else if (!cloudLink) {
+        cloudLink = isTr ? 'Materyaller e-posta ile iletilecek' : 'Assets to be sent via email';
+      }
 
       // Generate Ticket ID e.g. #BH-7842
       const ticketNum = Math.floor(1000 + Math.random() * 9000);
@@ -2375,7 +2470,7 @@ Oluşturulma Tarihi: ${now}
 
 [02] STRATEJİ & HİYERARŞİ
 • Stratejik İçgörü / Ana Mesaj: ${strategyText}
-• Başlık Stratejisi: ${headlineText}
+• Başlık: ${headlineText}
 • Gövde Metni: ${bodyText}
 • Vurgu Etiketi: ${badgeText}
 • Yasal Metin: ${legalText}
@@ -2385,7 +2480,7 @@ Oluşturulma Tarihi: ${now}
 • Özel Ölçüler: ${customDimensions}
 
 [04] MATERYALLER & KOŞULLAR
-• Bulut / WeTransfer Linki: ${cloudLink}
+• Materyal / Döküman: ${cloudLink}
 • %50 Avans ve Çalışma Şartları: Onaylandı
 
 ═════════════════════════════════════════
@@ -2405,7 +2500,7 @@ Generated Date: ${now}
 
 [02] STRATEGY & HIERARCHY
 • Strategic Insight / Core Message: ${strategyText}
-• Headline Strategy: ${headlineText}
+• Headline: ${headlineText}
 • Body Narrative: ${bodyText}
 • Highlight Badge: ${badgeText}
 • Legal Fine Print: ${legalText}
@@ -2415,7 +2510,7 @@ Generated Date: ${now}
 • Custom Dimensions: ${customDimensions}
 
 [04] ASSETS & TERMS
-• Cloud / WeTransfer Link: ${cloudLink}
+• Assets / Documents: ${cloudLink}
 • Terms & 50% Advance Consent: Confirmed & Accepted
 
 ═════════════════════════════════════════
@@ -2435,45 +2530,46 @@ Portfolio: https://burakhellagu.com
           <p><strong>${isTr ? 'Çıktılar' : 'Deliverables'}:</strong> ${deliverables}</p>
           <p><strong>${isTr ? 'Başlık' : 'Headline'}:</strong> ${headlineText}</p>
           <p><strong>${isTr ? 'Mecralar' : 'Channels'}:</strong> ${channels}</p>
-          <p><strong>${isTr ? 'Materyal Linki' : 'Assets Link'}:</strong> <a href="${cloudLink}" target="_blank" style="color: #c5a059; text-decoration: underline;">${cloudLink}</a></p>
+          <p><strong>${isTr ? 'Materyaller' : 'Assets'}:</strong> ${cloudLink.startsWith('http') ? `<a href="${cloudLink}" target="_blank" style="color: #c5a059; text-decoration: underline;">${cloudLink}</a>` : cloudLink}</p>
           <p><strong>${isTr ? 'Tarih' : 'Date'}:</strong> ${now}</p>
         `;
       }
 
-      // Send Email in Background to hello@burakhellagu.com & hellaguburak@gmail.com (Dual Redundancy)
-      const payload = {
-        _subject: `[Brief Ticket ${ticketId}] ${brandName}`,
-        _replyto: contactEmail,
-        _cc: 'hellaguburak@gmail.com',
-        Ticket_ID: ticketId,
-        Brand_Company: brandName,
-        Contact_Person: contactName,
-        Email: contactEmail,
-        Phone: contactPhone,
-        Deliverables: deliverables,
-        Strategic_Insight: strategyText,
-        Headline: headlineText,
-        Body_Copy: bodyText,
-        Badge: badgeText,
-        Legal_Fine_Print: legalText,
-        Channels_Aspect_Ratios: channels,
-        Custom_Dimensions: customDimensions,
-        Assets_Cloud_Link: cloudLink,
-        Advance_Terms_Consent: 'Accepted & Confirmed',
-        Full_Ticket_Summary: currentTicketSummary
-      };
+      // Send Email in Background (FormData allows file attachment)
+      const formData = new FormData();
+      formData.append('_subject', `[Brief Ticket ${ticketId}] ${brandName}`);
+      formData.append('_replyto', contactEmail);
+      formData.append('_cc', 'hellaguburak@gmail.com');
+      formData.append('Ticket_ID', ticketId);
+      formData.append('Brand_Company', brandName);
+      formData.append('Contact_Person', contactName);
+      formData.append('Email', contactEmail);
+      formData.append('Phone', contactPhone);
+      formData.append('Deliverables', deliverables);
+      formData.append('Strategic_Insight', strategyText);
+      formData.append('Headline', headlineText);
+      formData.append('Body_Copy', bodyText);
+      formData.append('Badge', badgeText);
+      formData.append('Legal_Fine_Print', legalText);
+      formData.append('Channels_Aspect_Ratios', channels);
+      formData.append('Custom_Dimensions', customDimensions);
+      formData.append('Assets_or_Link', cloudLink);
+      formData.append('Advance_Terms_Consent', 'Accepted & Confirmed');
+      formData.append('Full_Ticket_Summary', currentTicketSummary);
+
+      if (attachedFile) {
+        formData.append('attachment', attachedFile);
+      }
 
       try {
         fetch('https://formsubmit.co/ajax/hello@burakhellagu.com', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
+          body: formData
         }).catch(err => console.log('Dispatch 1:', err));
 
         fetch('https://formsubmit.co/ajax/hellaguburak@gmail.com', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
+          body: formData
         }).catch(err => console.log('Dispatch 2:', err));
       } catch (err) {
         console.log('Dispatch error:', err);
