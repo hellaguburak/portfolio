@@ -527,50 +527,79 @@ function initMouseGlowAndRipples() {
     }, 800);
   });
   
-  // Language Selector toggle
+  // Language Selector toggle (Global, Header, Story & Brief Modal)
   const langTr = document.getElementById('lang-tr');
   const langEn = document.getElementById('lang-en');
+  const briefLangTr = document.getElementById('brief-lang-tr');
+  const briefLangEn = document.getElementById('brief-lang-en');
   
-  if (langTr && langEn) {
-    const setLanguage = (lang) => {
-      const nameInput = document.getElementById('form-name');
-      const emailInput = document.getElementById('form-email');
-      const websiteInput = document.getElementById('form-website');
-      const msgInput = document.getElementById('form-message');
-      const submitBtn = document.getElementById('btn-submit-form');
-      
-      if (lang === 'tr') {
-        document.body.classList.add('lang-tr');
-        langTr.classList.add('active');
-        langEn.classList.remove('active');
-        
-        // Update placeholders to Turkish
-        if (nameInput) nameInput.placeholder = 'Adınız Soyadınız';
-        if (emailInput) emailInput.placeholder = 'e-posta@ornek.com';
-        if (websiteInput) websiteInput.placeholder = 'https://firma.com';
-        if (msgInput) msgInput.placeholder = 'Proje detaylarını kısaca açıklayın...';
-        if (submitBtn) submitBtn.querySelector('.lang-tr').textContent = 'Talebi Gönder';
-      } else {
-        document.body.classList.remove('lang-tr');
-        langEn.classList.add('active');
-        langTr.classList.remove('active');
-        
-        // Update placeholders to English
-        if (nameInput) nameInput.placeholder = 'John Doe';
-        if (emailInput) emailInput.placeholder = 'john@example.com';
-        if (websiteInput) websiteInput.placeholder = 'https://mycompany.com';
-        if (msgInput) msgInput.placeholder = 'Briefly describe your objectives...';
-        if (submitBtn) submitBtn.querySelector('.lang-en').textContent = 'Send Request';
-      }
-    };
+  const setLanguage = (lang) => {
+    const isTr = lang === 'tr';
+    const nameInput = document.getElementById('form-name');
+    const emailInput = document.getElementById('form-email');
+    const websiteInput = document.getElementById('form-website');
+    const msgInput = document.getElementById('form-message');
+    const submitBtn = document.getElementById('btn-submit-form');
     
-    langTr.addEventListener('click', () => setLanguage('tr'));
-    langEn.addEventListener('click', () => setLanguage('en'));
-  }
+    if (isTr) {
+      document.body.classList.add('lang-tr');
+      document.querySelectorAll('#lang-tr, #brief-lang-tr, .story-lang-btn.btn-tr').forEach(b => b.classList.add('active'));
+      document.querySelectorAll('#lang-en, #brief-lang-en, .story-lang-btn.btn-en').forEach(b => b.classList.remove('active'));
+      
+      // Update standard form placeholders
+      if (nameInput) nameInput.placeholder = 'Adınız Soyadınız';
+      if (emailInput) emailInput.placeholder = 'e-posta@ornek.com';
+      if (websiteInput) websiteInput.placeholder = 'https://firma.com';
+      if (msgInput) msgInput.placeholder = 'Proje detaylarını kısaca açıklayın...';
+      if (submitBtn && submitBtn.querySelector('.lang-tr')) submitBtn.querySelector('.lang-tr').textContent = 'Talebi Gönder';
+    } else {
+      document.body.classList.remove('lang-tr');
+      document.querySelectorAll('#lang-en, #brief-lang-en, .story-lang-btn.btn-en').forEach(b => b.classList.add('active'));
+      document.querySelectorAll('#lang-tr, #brief-lang-tr, .story-lang-btn.btn-tr').forEach(b => b.classList.remove('active'));
+      
+      // Update standard form placeholders
+      if (nameInput) nameInput.placeholder = 'John Doe';
+      if (emailInput) emailInput.placeholder = 'john@example.com';
+      if (websiteInput) websiteInput.placeholder = 'https://mycompany.com';
+      if (msgInput) msgInput.placeholder = 'Briefly describe your objectives...';
+      if (submitBtn && submitBtn.querySelector('.lang-en')) submitBtn.querySelector('.lang-en').textContent = 'Send Request';
+    }
+
+    // Dynamic placeholders across Brief Modal and all data-placeholder elements
+    document.querySelectorAll('[data-placeholder-en][data-placeholder-tr]').forEach(el => {
+      el.placeholder = isTr ? el.getAttribute('data-placeholder-tr') : el.getAttribute('data-placeholder-en');
+    });
+
+    // Update Brief Hidden Values
+    const deliverablesGroup = document.getElementById('bt-deliverables-group');
+    const deliverablesVal = document.getElementById('bt-deliverables-val');
+    if (deliverablesGroup && deliverablesVal) {
+      const activePills = deliverablesGroup.querySelectorAll('.brief-pill.active');
+      const vals = Array.from(activePills).map(p => isTr ? (p.getAttribute('data-val-tr') || p.getAttribute('data-val-en')) : p.getAttribute('data-val-en'));
+      deliverablesVal.value = vals.join(', ');
+    }
+
+    const channelsGroup = document.getElementById('bt-channels-group');
+    const channelsVal = document.getElementById('bt-channels-val');
+    if (channelsGroup && channelsVal) {
+      const activePills = channelsGroup.querySelectorAll('.brief-pill.active');
+      const vals = Array.from(activePills).map(p => isTr ? (p.getAttribute('data-val-tr') || p.getAttribute('data-val-en')) : p.getAttribute('data-val-en'));
+      channelsVal.value = vals.join(', ');
+    }
+  };
+  
+  if (langTr) langTr.addEventListener('click', () => setLanguage('tr'));
+  if (langEn) langEn.addEventListener('click', () => setLanguage('en'));
+  if (briefLangTr) briefLangTr.addEventListener('click', () => setLanguage('tr'));
+  if (briefLangEn) briefLangEn.addEventListener('click', () => setLanguage('en'));
+
+  // Initialize placeholder language state
+  setLanguage(document.body.classList.contains('lang-tr') ? 'tr' : 'en');
 }
 
 /**
  * Contact Form Interaction & Mock Submission
+ * Supports Email client direct trigger and WhatsApp chat bridge.
  */
 function initFormHandler() {
   const form = document.getElementById('portfolio-contact-form');
@@ -2165,6 +2194,10 @@ function initBriefTicketStudio() {
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    const isTr = document.body.classList.contains('lang-tr');
+    document.querySelectorAll('[data-placeholder-en][data-placeholder-tr]').forEach(el => {
+      el.placeholder = isTr ? el.getAttribute('data-placeholder-tr') : el.getAttribute('data-placeholder-en');
+    });
   };
 
   // Close Modal
@@ -2193,8 +2226,9 @@ function initBriefTicketStudio() {
     pills.forEach(pill => {
       pill.addEventListener('click', () => {
         pill.classList.toggle('active');
+        const isTr = document.body.classList.contains('lang-tr');
         const activeVals = Array.from(deliverablesGroup.querySelectorAll('.brief-pill.active'))
-          .map(p => p.getAttribute('data-val'));
+          .map(p => isTr ? (p.getAttribute('data-val-tr') || p.getAttribute('data-val-en')) : p.getAttribute('data-val-en'));
         deliverablesVal.value = activeVals.join(', ');
       });
     });
@@ -2258,8 +2292,9 @@ function initBriefTicketStudio() {
     pills.forEach(pill => {
       pill.addEventListener('click', () => {
         pill.classList.toggle('active');
+        const isTr = document.body.classList.contains('lang-tr');
         const activeVals = Array.from(channelsGroup.querySelectorAll('.brief-pill.active'))
-          .map(p => p.getAttribute('data-val'));
+          .map(p => isTr ? (p.getAttribute('data-val-tr') || p.getAttribute('data-val-en')) : p.getAttribute('data-val-en'));
         channelsVal.value = activeVals.join(', ');
       });
     });
@@ -2286,37 +2321,74 @@ function initBriefTicketStudio() {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const isTr = document.body.classList.contains('lang-tr');
       const brandName = document.getElementById('bt-brand-name').value.trim();
       const contactName = document.getElementById('bt-contact-name').value.trim();
       const contactEmail = document.getElementById('bt-contact-email').value.trim();
-      const contactPhone = document.getElementById('bt-contact-phone').value.trim() || 'Not specified';
-      const deliverables = deliverablesVal ? deliverablesVal.value : 'Key Visual (KV) Design';
+      const contactPhone = document.getElementById('bt-contact-phone').value.trim() || (isTr ? 'Belirtilmedi' : 'Not specified');
+      const deliverables = deliverablesVal && deliverablesVal.value.trim() ? deliverablesVal.value.trim() : '';
+
+      if (!deliverables) {
+        alert(isTr ? 'Lütfen en az bir proje / çıktı türü seçin.' : 'Please select at least 1 deliverable type.');
+        return;
+      }
       
       // Headline
       const activeHeadlineTab = headlineTabs ? headlineTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
       const headlineText = activeHeadlineTab === 'custom' 
-        ? (headlineInput && headlineInput.value.trim() ? headlineInput.value.trim() : 'Custom headline specified')
-        : '⚡ Creative headline & slogan ideation requested from Burak Hellagu';
+        ? (headlineInput && headlineInput.value.trim() ? headlineInput.value.trim() : (isTr ? 'Özel başlık girildi' : 'Custom headline specified'))
+        : (isTr ? 'Yaratıcı başlık & slogan önerisi Burak Hellagü\'den talep edildi' : 'Creative headline & slogan ideation requested from Burak Hellagu');
 
       // Body Copy
       const activeBodyTab = bodyTabs ? bodyTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
       const bodyText = activeBodyTab === 'custom'
-        ? (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : 'None provided')
-        : '⚡ High-impact brand narrative structure requested from Burak Hellagu';
+        ? (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : (isTr ? 'Girilmedi' : 'None provided'))
+        : (isTr ? 'Etkili marka metin kurgusu Burak Hellagü\'den talep edildi' : 'Brand narrative structure requested from Burak Hellagu');
 
-      const badgeText = document.getElementById('bt-badge-input').value.trim() || 'None';
-      const legalText = document.getElementById('bt-legal-input').value.trim() || 'None';
-      const channels = channelsVal ? channelsVal.value : 'Standard Digital & Social';
-      const customDimensions = document.getElementById('bt-custom-dimensions').value.trim() || 'Standard aspect ratios';
-      const cloudLink = document.getElementById('bt-cloud-link').value.trim() || 'Assets to be sent via email';
+      const strategyText = (document.getElementById('bt-strategy-input') ? document.getElementById('bt-strategy-input').value.trim() : '') || (isTr ? 'Belirtilmedi' : 'Not specified');
+      const badgeText = document.getElementById('bt-badge-input').value.trim() || (isTr ? 'Yok' : 'None');
+      const legalText = document.getElementById('bt-legal-input').value.trim() || (isTr ? 'Yok' : 'None');
+      const channels = channelsVal ? channelsVal.value : (isTr ? 'Standart Dijital & Sosyal' : 'Standard Digital & Social');
+      const customDimensions = document.getElementById('bt-custom-dimensions').value.trim() || (isTr ? 'Standart formatlar' : 'Standard aspect ratios');
+      const cloudLink = document.getElementById('bt-cloud-link').value.trim() || (isTr ? 'Materyaller e-posta ile iletilecek' : 'Assets to be sent via email');
 
       // Generate Ticket ID e.g. #BH-7842
       const ticketNum = Math.floor(1000 + Math.random() * 9000);
       const ticketId = `#BH-${ticketNum}`;
-      const now = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const now = new Date().toLocaleDateString(isTr ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
       // Build Summary String
-      currentTicketSummary = `═════════════════════════════════════════
+      currentTicketSummary = isTr ? `═════════════════════════════════════════
+BURAK HELLAGÜ - KREATİF BRIEF TICKET ${ticketId}
+Oluşturulma Tarihi: ${now}
+═════════════════════════════════════════
+
+[01] MARKA & İLETİŞİM
+• Marka / Şirket: ${brandName}
+• Yetkili Kişi: ${contactName}
+• E-posta: ${contactEmail}
+• Telefon: ${contactPhone}
+• Çıktı / Proje Türü: ${deliverables}
+
+[02] STRATEJİ & HİYERARŞİ
+• Stratejik İçgörü / Ana Mesaj: ${strategyText}
+• Başlık Stratejisi: ${headlineText}
+• Gövde Metni: ${bodyText}
+• Vurgu Etiketi: ${badgeText}
+• Yasal Metin: ${legalText}
+
+[03] HEDEF MECRALAR & FORMATLAR
+• Mecralar: ${channels}
+• Özel Ölçüler: ${customDimensions}
+
+[04] MATERYALLER & KOŞULLAR
+• Bulut / WeTransfer Linki: ${cloudLink}
+• %50 Avans ve Çalışma Şartları: Onaylandı
+
+═════════════════════════════════════════
+Durum: Kreatif Değerlendirme Bekleniyor
+Portfolyo: https://burakhellagu.com
+═════════════════════════════════════════` : `═════════════════════════════════════════
 BURAK HELLAGU - CREATIVE BRIEF TICKET ${ticketId}
 Generated Date: ${now}
 ═════════════════════════════════════════
@@ -2328,7 +2400,8 @@ Generated Date: ${now}
 • Phone: ${contactPhone}
 • Deliverables: ${deliverables}
 
-[02] COPYWRITING & HIERARCHY
+[02] STRATEGY & HIERARCHY
+• Strategic Insight / Core Message: ${strategyText}
 • Headline Strategy: ${headlineText}
 • Body Narrative: ${bodyText}
 • Highlight Badge: ${badgeText}
@@ -2343,7 +2416,7 @@ Generated Date: ${now}
 • Terms & 50% Advance Consent: Confirmed & Accepted
 
 ═════════════════════════════════════════
-Status: Awaiting Creative Review (24-48h Turnaround)
+Status: Awaiting Creative Review
 Portfolio: https://burakhellagu.com
 ═════════════════════════════════════════`;
 
@@ -2354,13 +2427,13 @@ Portfolio: https://burakhellagu.com
       const summaryBody = document.getElementById('bt-summary-body');
       if (summaryBody) {
         summaryBody.innerHTML = `
-          <p><strong>Brand / Marka:</strong> ${brandName}</p>
-          <p><strong>Contact / Yetkili:</strong> ${contactName} (${contactEmail})</p>
-          <p><strong>Deliverables / Çıktılar:</strong> ${deliverables}</p>
-          <p><strong>Headline / Başlık:</strong> ${headlineText}</p>
-          <p><strong>Channels / Mecralar:</strong> ${channels}</p>
-          <p><strong>Assets Link:</strong> <a href="${cloudLink}" target="_blank" style="color: #d4af37; text-decoration: underline;">${cloudLink}</a></p>
-          <p><strong>Date / Tarih:</strong> ${now}</p>
+          <p><strong>${isTr ? 'Marka' : 'Brand'}:</strong> ${brandName}</p>
+          <p><strong>${isTr ? 'Yetkili' : 'Contact'}:</strong> ${contactName} (${contactEmail})</p>
+          <p><strong>${isTr ? 'Çıktılar' : 'Deliverables'}:</strong> ${deliverables}</p>
+          <p><strong>${isTr ? 'Başlık' : 'Headline'}:</strong> ${headlineText}</p>
+          <p><strong>${isTr ? 'Mecralar' : 'Channels'}:</strong> ${channels}</p>
+          <p><strong>${isTr ? 'Materyal Linki' : 'Assets Link'}:</strong> <a href="${cloudLink}" target="_blank" style="color: #c5a059; text-decoration: underline;">${cloudLink}</a></p>
+          <p><strong>${isTr ? 'Tarih' : 'Date'}:</strong> ${now}</p>
         `;
       }
 
