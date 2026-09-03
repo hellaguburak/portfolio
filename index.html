@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Burak Hellagu | Award-winning Head of Creative & Brand Strategist. Specializing in high-impact art direction and premium consulting. Ex-Getir US & Pazarama.">
   <title>Burak Hellagu | Head of Creative & Brand Strategist</title>
-  <link rel="stylesheet" href="style_v20.css">
+  <link rel="stylesheet" href="style_v21.css">
 </head>
 <body>
 
@@ -1058,6 +1058,29 @@
                 </span>
               </div>
             </div>
+
+            <!-- Premium Gold Brief Ticket Generator Trigger -->
+            <div class="brief-ticket-teaser-card">
+              <div class="teaser-badge">
+                <span class="gold-sparkle">✦</span>
+                <span class="lang-en">STRUCTURED WORKFLOW</span>
+                <span class="lang-tr">ORGANİZE İŞ AKIŞI</span>
+              </div>
+              <h3 class="teaser-title">
+                <span class="lang-en">Ready to Start a Project?</span>
+                <span class="lang-tr">Projeye Başlamaya Hazır mısınız?</span>
+              </h3>
+              <p class="teaser-desc">
+                <span class="lang-en">Define your headline, body copy, channels, deliverables, and asset links in 2 minutes with our streamlined brief studio.</span>
+                <span class="lang-tr">Başlık, metin, mecra ve materyal linklerinizi içeren düzenli proje brief ticket'ınızı 2 dakikada oluşturun.</span>
+              </p>
+              <button type="button" class="btn-brief-ticket" id="btn-open-brief-modal">
+                <span class="gold-sparkle">✦</span>
+                <span class="lang-en">Create Brief Ticket</span>
+                <span class="lang-tr">Brief Ticket'ı Oluştur</span>
+                <span class="btn-arrow">&rsaquo;</span>
+              </button>
+            </div>
           </div>
           <div class="contact-form-column">
             <form class="glass-card contact-form" id="portfolio-contact-form" action="https://api.web3forms.com/submit" method="POST">
@@ -1172,6 +1195,376 @@
     </div>
   </div>
 
-  <script src="main_v17.js"></script>
+  <!-- Creative Brief Studio Modal -->
+  <div class="brief-modal" id="brief-modal" aria-hidden="true" role="dialog">
+    <div class="brief-modal-backdrop" id="brief-modal-backdrop"></div>
+    <div class="brief-modal-container">
+      <div class="brief-modal-content">
+        <!-- Close Button -->
+        <button type="button" class="brief-modal-close-btn" id="brief-modal-close-btn" aria-label="Close brief studio">&times;</button>
+        
+        <!-- Header -->
+        <div class="brief-modal-header">
+          <div class="brief-modal-badge">
+            <span class="gold-sparkle">✦</span>
+            <span class="lang-en">CREATIVE BRIEF STUDIO</span>
+            <span class="lang-tr">KREATİF BRIEF STÜDYOSU</span>
+          </div>
+          <h2 class="brief-modal-title">
+            <span class="lang-en">Project Brief Ticket Generator</span>
+            <span class="lang-tr">Proje Brief Ticket Oluşturucu</span>
+          </h2>
+          <p class="brief-modal-subtitle">
+            <span class="lang-en">Define your headline, copy hierarchy, channels, deliverables, and asset links in 2 minutes. We will analyze your requirements and reach out within 24-48h.</span>
+            <span class="lang-tr">Başlık, içerik hiyerarşisi, mecra ve materyal linklerinizi 2 dakikada belirleyin. Taleplerinizi analiz edip 24-48 saat içinde özel yol haritamızla dönüş yapalım.</span>
+          </p>
+        </div>
+
+        <!-- Brief Form -->
+        <form class="brief-form" id="brief-ticket-form">
+          
+          <!-- Section 01: Brand & Contact -->
+          <div class="brief-section-block">
+            <div class="brief-section-header">
+              <span class="brief-section-num">01</span>
+              <div class="brief-section-titles">
+                <h4 class="brief-section-title">
+                  <span class="lang-en">Brand & Contact Identity</span>
+                  <span class="lang-tr">Marka & İletişim Bilgileri</span>
+                </h4>
+                <p class="brief-section-desc">
+                  <span class="lang-en">Who is this project for and how can we reach you?</span>
+                  <span class="lang-tr">Bu proje kimin için ve size nasıl ulaşabiliriz?</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="brief-grid-2">
+              <div class="brief-form-group">
+                <label for="bt-brand-name">
+                  <span class="lang-en">Brand / Company Name *</span>
+                  <span class="lang-tr">Marka / Şirket Adı *</span>
+                </label>
+                <input type="text" id="bt-brand-name" name="brand_name" required placeholder="e.g. Acme Corp, Getir, Sarelle">
+              </div>
+              <div class="brief-form-group">
+                <label for="bt-contact-name">
+                  <span class="lang-en">Contact Person *</span>
+                  <span class="lang-tr">Yetkili Kişi *</span>
+                </label>
+                <input type="text" id="bt-contact-name" name="contact_name" required placeholder="e.g. Jane Doe">
+              </div>
+            </div>
+
+            <div class="brief-grid-2">
+              <div class="brief-form-group">
+                <label for="bt-contact-email">
+                  <span class="lang-en">Email Address *</span>
+                  <span class="lang-tr">E-posta Adresi *</span>
+                </label>
+                <input type="email" id="bt-contact-email" name="contact_email" required placeholder="jane@company.com">
+              </div>
+              <div class="brief-form-group">
+                <label for="bt-contact-phone">
+                  <span class="lang-en">Phone / WhatsApp</span>
+                  <span class="lang-tr">Telefon / WhatsApp</span>
+                </label>
+                <input type="tel" id="bt-contact-phone" name="contact_phone" placeholder="+90 5XX XXX XX XX">
+              </div>
+            </div>
+
+            <!-- Deliverables Multi-select Pills -->
+            <div class="brief-form-group">
+              <label>
+                <span class="lang-en">Project / Deliverable Type (Select all that apply)</span>
+                <span class="lang-tr">Proje / Çıktı Türü (Uygulananları seçin)</span>
+              </label>
+              <div class="brief-pill-group" id="bt-deliverables-group">
+                <button type="button" class="brief-pill active" data-val="Key Visual (KV) Design">Key Visual (KV) Design</button>
+                <button type="button" class="brief-pill" data-val="360° Campaign">360° Campaign</button>
+                <button type="button" class="brief-pill" data-val="Social Media / Content">Social Media / Content</button>
+                <button type="button" class="brief-pill" data-val="Outdoor (OOH) / Billboard">Outdoor (OOH) / Billboard</button>
+                <button type="button" class="brief-pill" data-val="Brand Identity & Logo">Brand Identity & Logo</button>
+                <button type="button" class="brief-pill" data-val="Motion / Video Edit">Motion / Video Edit</button>
+                <button type="button" class="brief-pill" data-val="AI Generative Visuals">AI Generative Visuals</button>
+              </div>
+              <input type="hidden" id="bt-deliverables-val" name="deliverables" value="Key Visual (KV) Design">
+            </div>
+          </div>
+
+          <!-- Section 02: Content & Copy Hierarchy -->
+          <div class="brief-section-block">
+            <div class="brief-section-header">
+              <span class="brief-section-num">02</span>
+              <div class="brief-section-titles">
+                <h4 class="brief-section-title">
+                  <span class="lang-en">Copywriting & Content Hierarchy</span>
+                  <span class="lang-tr">Metin & İçerik Hiyerarşisi</span>
+                </h4>
+                <p class="brief-section-desc">
+                  <span class="lang-en">Headline, narrative, highlight badges, and legal disclaimers.</span>
+                  <span class="lang-tr">Ana başlık, gövde metni, öne çıkan etiketler ve yasal ibareler.</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Headline Strategy Selector -->
+            <div class="brief-form-group">
+              <label>
+                <span class="lang-en">Headline (Slogan / Main Title) Strategy</span>
+                <span class="lang-tr">Ana Başlık (Slogan / Başlık) Stratejisi</span>
+              </label>
+              <div class="brief-choice-tabs" id="bt-headline-mode-tabs">
+                <button type="button" class="choice-tab active" data-mode="custom">
+                  <span class="lang-en">I have a specific headline</span>
+                  <span class="lang-tr">Belirli bir başlığım var</span>
+                </button>
+                <button type="button" class="choice-tab" data-mode="propose">
+                  <span class="lang-en">Propose creative headline ideas</span>
+                  <span class="lang-tr">Yaratıcı başlık önerisi istiyorum</span>
+                </button>
+              </div>
+              
+              <div class="brief-input-subbox" id="bt-headline-custom-box">
+                <input type="text" id="bt-headline-input" name="headline_text" placeholder="e.g. Şekerden Korkma, Tadelle Yanında">
+              </div>
+              <div class="brief-input-subbox hidden" id="bt-headline-propose-box">
+                <p class="subbox-hint">
+                  <span class="lang-en">✦ Creative headlines and campaign hooks will be conceptualized based on your brand essence and target audience.</span>
+                  <span class="lang-tr">✦ Marka tonunuza ve hedef kitlenize uygun yaratıcı başlık ve slogan alternatifleri tarafımızca çalışılacaktır.</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Copy Strategy Selector -->
+            <div class="brief-form-group">
+              <label>
+                <span class="lang-en">Body Copy (Secondary Narrative) Strategy</span>
+                <span class="lang-tr">Gövde Metni (Alt Açıklama) Stratejisi</span>
+              </label>
+              <div class="brief-choice-tabs" id="bt-body-mode-tabs">
+                <button type="button" class="choice-tab active" data-mode="custom">
+                  <span class="lang-en">I have body copy ready</span>
+                  <span class="lang-tr">Gövde metnim hazır</span>
+                </button>
+                <button type="button" class="choice-tab" data-mode="propose">
+                  <span class="lang-en">Propose body copy structure</span>
+                  <span class="lang-tr">Gövde metnini sen kurgula</span>
+                </button>
+              </div>
+
+              <div class="brief-input-subbox" id="bt-body-custom-box">
+                <textarea id="bt-body-input" name="body_text" rows="3" placeholder="Enter paragraph or bullet points to feature on the design..."></textarea>
+              </div>
+              <div class="brief-input-subbox hidden" id="bt-body-propose-box">
+                <p class="subbox-hint">
+                  <span class="lang-en">✦ A concise, high-impact brand narrative will be crafted to accompany the visual composition.</span>
+                  <span class="lang-tr">✦ Görsel kompozisyonu destekleyecek vurucu ve net bir gövde metni kurgusu oluşturulacaktır.</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="brief-grid-2">
+              <!-- Badge / Highlight Sticker -->
+              <div class="brief-form-group">
+                <label for="bt-badge-input">
+                  <span class="lang-en">Badge / Highlight Tag (Optional)</span>
+                  <span class="lang-tr">Badge / Vurgu Etiketi (İsteğe Bağlı)</span>
+                </label>
+                <input type="text" id="bt-badge-input" name="badge_text" placeholder="e.g. %50 İndirim, Yeni Sezon, 100% Organik">
+              </div>
+
+              <!-- Legal / Mandatory Disclaimers -->
+              <div class="brief-form-group">
+                <label for="bt-legal-input">
+                  <span class="lang-en">Legal / Fine Print (Optional)</span>
+                  <span class="lang-tr">Yasal Metin / Zorunlu İbareler (İsteğe Bağlı)</span>
+                </label>
+                <input type="text" id="bt-legal-input" name="legal_text" placeholder="e.g. Kampanya 15-30 Eylül tarihleri arasında geçerlidir.">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 03: Channels & Dimensions -->
+          <div class="brief-section-block">
+            <div class="brief-section-header">
+              <span class="brief-section-num">03</span>
+              <div class="brief-section-titles">
+                <h4 class="brief-section-title">
+                  <span class="lang-en">Target Channels & Aspect Ratios</span>
+                  <span class="lang-tr">Hedef Mecralar & Ölçü Formatları</span>
+                </h4>
+                <p class="brief-section-desc">
+                  <span class="lang-en">Where will this design live?</span>
+                  <span class="lang-tr">Bu tasarım hangi mecralarda yayınlanacak?</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="brief-pill-group" id="bt-channels-group">
+              <button type="button" class="brief-pill active" data-val="Instagram Post (1:1 / 4:5)">Instagram Post (1:1 / 4:5)</button>
+              <button type="button" class="brief-pill active" data-val="Instagram Story/Reels (9:16)">Instagram Story/Reels (9:16)</button>
+              <button type="button" class="brief-pill" data-val="Billboard / Megalight (OOH)">Billboard / Megalight (OOH)</button>
+              <button type="button" class="brief-pill" data-val="Digital Key Visual (16:9 / 16:11)">Digital Key Visual (16:9 / 16:11)</button>
+              <button type="button" class="brief-pill" data-val="Packaging / Product Display">Packaging / Product Display</button>
+              <button type="button" class="brief-pill" data-val="YouTube Cover / Banner">YouTube Cover / Banner</button>
+              <button type="button" class="brief-pill" data-val="Print & Editorial">Print & Editorial</button>
+            </div>
+            <input type="hidden" id="bt-channels-val" name="channels" value="Instagram Post (1:1 / 4:5), Instagram Story/Reels (9:16)">
+
+            <div class="brief-form-group" style="margin-top: 1rem;">
+              <label for="bt-custom-dimensions">
+                <span class="lang-en">Custom Dimensions or Specific File Formats (Optional)</span>
+                <span class="lang-tr">Özel Ölçüler veya Format Notları (İsteğe Bağlı)</span>
+              </label>
+              <input type="text" id="bt-custom-dimensions" name="custom_dimensions" placeholder="e.g. 500x350cm OOH, CMYK Print Ready PDF, PSD with smart layers">
+            </div>
+          </div>
+
+          <!-- Section 04: Assets, Cloud Links & Terms -->
+          <div class="brief-section-block">
+            <div class="brief-section-header">
+              <span class="brief-section-num">04</span>
+              <div class="brief-section-titles">
+                <h4 class="brief-section-title">
+                  <span class="lang-en">Assets, Cloud Links & Terms</span>
+                  <span class="lang-tr">Materyaller, Bulut Linkleri & Koşullar</span>
+                </h4>
+                <p class="brief-section-desc">
+                  <span class="lang-en">Provide raw assets (logos, fonts, photos) and review workflow terms.</span>
+                  <span class="lang-tr">Ham dosyaları (logo, font, fotoğraflar) paylaşın ve çalışma şartlarını onaylayın.</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- WeTransfer / Cloud Link -->
+            <div class="brief-form-group">
+              <label for="bt-cloud-link">
+                <span class="lang-en">WeTransfer / Google Drive / Dropbox Link (Recommended)</span>
+                <span class="lang-tr">WeTransfer / Google Drive / Dropbox Linki (Önerilen)</span>
+              </label>
+              <input type="url" id="bt-cloud-link" name="cloud_link" placeholder="https://we.tl/t-XXXXXX or Google Drive folder URL">
+              <p class="field-hint">
+                <span class="lang-en">Please include high-res vector logos (.AI / .EPS / .SVG), brand font files (.OTF / .TTF), brand guides, and RAW photo assets.</span>
+                <span class="lang-tr">Vektörel logo (.AI / .EPS / .SVG), kurumsal font dosyaları (.OTF / .TTF), marka kılavuzu ve yüksek çözünürlüklü fotoğrafları ekleyebilirsiniz.</span>
+              </p>
+            </div>
+
+            <!-- Expandable Terms & Conditions Accordion -->
+            <div class="brief-terms-accordion">
+              <button type="button" class="terms-accordion-toggle" id="bt-terms-toggle">
+                <span class="toggle-icon">▸</span>
+                <span class="lang-en">Terms of Service & Workflow Conditions (Click to view details / Read more)</span>
+                <span class="lang-tr">Çalışma Şartları & Sözleşme Koşulları (Detayları görmek için tıklayın / Devamını Oku)</span>
+              </button>
+              <div class="terms-accordion-content hidden" id="bt-terms-content">
+                <div class="terms-card-body">
+                  <div class="term-row">
+                    <span class="term-number">01</span>
+                    <div class="term-text">
+                      <strong class="lang-en">Advance Payment Principle:</strong><strong class="lang-tr">Avans ve Ödeme Prensibi:</strong>
+                      <span class="lang-en">A 50% advance deposit is required to initiate the creative sprint, reserve calendar capacity, and begin design work. The remaining 50% balance is settled prior to final high-resolution source delivery.</span>
+                      <span class="lang-tr">%50 avans ödemesi sonrası kreatif süreç ve teslim takvimi resmi olarak başlar. Kalan %50 bakiye, nihai yüksek çözünürlüklü master dosyalar teslim edilmeden önce tahsil edilir.</span>
+                    </div>
+                  </div>
+                  <div class="term-row">
+                    <span class="term-number">02</span>
+                    <div class="term-text">
+                      <strong class="lang-en">Portfolio & Showcase Rights:</strong><strong class="lang-tr">Portfolyo & Gösterim Hakkı:</strong>
+                      <span class="lang-en">Burak Hellagu reserves the right to showcase the finalized visual works and case studies on burakhellagu.com, Behance, international creative awards (Epica, Effie, etc.), and professional social channels.</span>
+                      <span class="lang-tr">Burak Hellagu, hazırlanan çalışmaları ve vaka analizlerini kişisel portfolyosunda (burakhellagu.com, Behance, sosyal medya) ve uluslararası kreatif ödüllerde (Epica, Effie vb.) sergileme hakkına sahiptir.</span>
+                    </div>
+                  </div>
+                  <div class="term-row">
+                    <span class="term-number">03</span>
+                    <div class="term-text">
+                      <strong class="lang-en">Revision Policy:</strong><strong class="lang-tr">Revizyon Politikası:</strong>
+                      <span class="lang-en">The agreed scope includes two (2) comprehensive rounds of feedback within the defined brief. Requests altering the fundamental core concept or introducing out-of-scope deliverables will be quoted separately.</span>
+                      <span class="lang-tr">Brief kapsamında iki (2) kapsamlı revizyon turu dahildir. Brief dışı yeni konsept veya köklü yön değişiklikleri ayrı bütçelendirilir.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mandatory Consent Checkbox -->
+            <div class="brief-consent-checkbox-wrap">
+              <label class="consent-label" for="bt-consent-checkbox">
+                <input type="checkbox" id="bt-consent-checkbox" name="terms_consent" required>
+                <span class="custom-checkmark"></span>
+                <span class="consent-text">
+                  <span class="lang-en">I have reviewed and agree to the <strong>50% advance deposit</strong>, <strong>portfolio showcase rights</strong>, and project workflow conditions.</span>
+                  <span class="lang-tr"><strong>%50 avans politikasını</strong>, <strong>portfolyo gösterim haklarını</strong> ve çalışma şartlarını okudum, onaylıyorum.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="brief-submit-wrap">
+            <button type="submit" class="btn-brief-submit" id="btn-brief-submit">
+              <span class="gold-sparkle">✦</span>
+              <span class="lang-en">Submit Brief Ticket</span>
+              <span class="lang-tr">Brief Ticket'ı Gönder</span>
+              <span class="btn-arrow">&rsaquo;</span>
+            </button>
+            <p class="submit-disclaimer">
+              <span class="lang-en">Fast turnaround: You will receive a structured response & proposal within 24-48h.</span>
+              <span class="lang-tr">Hızlı geri dönüş: 24-48 saat içerisinde yapılandırılmış yanıt ve sunum alacaksınız.</span>
+            </p>
+          </div>
+
+        </form>
+
+        <!-- Success Screen (Hidden by default, shown upon submit) -->
+        <div class="brief-success-view hidden" id="brief-success-view">
+          <div class="success-motion-icon">
+            <svg class="checkmark-svg" viewBox="0 0 52 52">
+              <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+              <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+          </div>
+          <div class="success-badge">
+            <span class="gold-sparkle">✦</span>
+            <span class="lang-en">TICKET GENERATED SUCCESSFULLY</span>
+            <span class="lang-tr">TICKET BAŞARIYLA OLUŞTURULDU</span>
+          </div>
+          <h2 class="success-title">
+            <span class="lang-en">We are excited about this project!</span>
+            <span class="lang-tr">Bu proje için heyecanlıyız!</span>
+          </h2>
+          <p class="success-desc">
+            <span class="lang-en">Your brief ticket has been registered. Sit back and relax; we will analyze your parameters and reach out with a tailored creative proposal and roadmap within 24-48 hours.</span>
+            <span class="lang-tr">Brief ticket'ınız başarıyla kaydedildi. Şimdi arkanıza yaslanın; parametrelerinizi inceleyip en geç 24-48 saat içinde özel kreatif yol haritamızla sizinle iletişime geçeceğiz.</span>
+          </p>
+
+          <!-- Ticket Summary Card -->
+          <div class="ticket-summary-card" id="bt-summary-card">
+            <div class="summary-header">
+              <span class="ticket-id" id="bt-summary-id">#BH-TICKET</span>
+              <span class="ticket-status-badge">ACTIVE / AKTİF</span>
+            </div>
+            <div class="summary-body" id="bt-summary-body">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="success-actions">
+            <button type="button" class="btn-brief-copy" id="btn-copy-ticket">
+              <span class="lang-en">Copy Ticket Summary</span>
+              <span class="lang-tr">Ticket Özetini Kopyala</span>
+            </button>
+            <button type="button" class="btn-brief-done" id="btn-close-success">
+              <span class="lang-en">Done / Back to Site</span>
+              <span class="lang-tr">Tamam / Siteye Dön</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="main_v18.js"></script>
 </body>
 </html>

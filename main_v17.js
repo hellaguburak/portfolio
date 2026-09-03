@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderScrollSpy();
   initPhilosophyStoryboard();
   initProjectGalleryModal();
+  initBriefTicketStudio();
 });
 
 /**
@@ -2140,5 +2141,270 @@ function initExperienceSyncScroll() {
     updateActiveRoles();
     updateActiveAwards();
   }, 100);
+}
+
+/**
+ * Creative Brief Studio & Brief Ticket Generator
+ * Interactive modal workflow, copywriting strategy tabs, channel pills,
+ * accordion terms, form submission, and animated motion success state.
+ */
+function initBriefTicketStudio() {
+  const modal = document.getElementById('brief-modal');
+  const openBtn = document.getElementById('btn-open-brief-modal');
+  const closeBtn = document.getElementById('brief-modal-close-btn');
+  const backdrop = document.getElementById('brief-modal-backdrop');
+  const form = document.getElementById('brief-ticket-form');
+  const successView = document.getElementById('brief-success-view');
+  const closeSuccessBtn = document.getElementById('btn-close-success');
+  const copyBtn = document.getElementById('btn-copy-ticket');
+
+  if (!modal || !openBtn) return;
+
+  // Open Modal
+  const openModal = () => {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  };
+
+  // Close Modal
+  const closeModal = () => {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  };
+
+  openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+
+  // Close on Escape Key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // 1. Deliverables Pill Selection (Multi-select)
+  const deliverablesGroup = document.getElementById('bt-deliverables-group');
+  const deliverablesVal = document.getElementById('bt-deliverables-val');
+  if (deliverablesGroup && deliverablesVal) {
+    const pills = deliverablesGroup.querySelectorAll('.brief-pill');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pill.classList.toggle('active');
+        const activeVals = Array.from(deliverablesGroup.querySelectorAll('.brief-pill.active'))
+          .map(p => p.getAttribute('data-val'));
+        deliverablesVal.value = activeVals.join(', ');
+      });
+    });
+  }
+
+  // 2. Headline Strategy Choice Tabs
+  const headlineTabs = document.getElementById('bt-headline-mode-tabs');
+  const headlineCustomBox = document.getElementById('bt-headline-custom-box');
+  const headlineProposeBox = document.getElementById('bt-headline-propose-box');
+  const headlineInput = document.getElementById('bt-headline-input');
+
+  if (headlineTabs) {
+    const tabs = headlineTabs.querySelectorAll('.choice-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const mode = tab.getAttribute('data-mode');
+        if (mode === 'custom') {
+          headlineCustomBox.classList.remove('hidden');
+          headlineProposeBox.classList.add('hidden');
+          if (headlineInput) headlineInput.focus();
+        } else {
+          headlineCustomBox.classList.add('hidden');
+          headlineProposeBox.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  // 3. Body Copy Strategy Choice Tabs
+  const bodyTabs = document.getElementById('bt-body-mode-tabs');
+  const bodyCustomBox = document.getElementById('bt-body-custom-box');
+  const bodyProposeBox = document.getElementById('bt-body-propose-box');
+  const bodyInput = document.getElementById('bt-body-input');
+
+  if (bodyTabs) {
+    const tabs = bodyTabs.querySelectorAll('.choice-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const mode = tab.getAttribute('data-mode');
+        if (mode === 'custom') {
+          bodyCustomBox.classList.remove('hidden');
+          bodyProposeBox.classList.add('hidden');
+          if (bodyInput) bodyInput.focus();
+        } else {
+          bodyCustomBox.classList.add('hidden');
+          bodyProposeBox.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  // 4. Target Channels Pill Selection (Multi-select)
+  const channelsGroup = document.getElementById('bt-channels-group');
+  const channelsVal = document.getElementById('bt-channels-val');
+  if (channelsGroup && channelsVal) {
+    const pills = channelsGroup.querySelectorAll('.brief-pill');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pill.classList.toggle('active');
+        const activeVals = Array.from(channelsGroup.querySelectorAll('.brief-pill.active'))
+          .map(p => p.getAttribute('data-val'));
+        channelsVal.value = activeVals.join(', ');
+      });
+    });
+  }
+
+  // 5. Terms Accordion Toggle
+  const termsToggle = document.getElementById('bt-terms-toggle');
+  const termsContent = document.getElementById('bt-terms-content');
+  if (termsToggle && termsContent) {
+    termsToggle.addEventListener('click', () => {
+      const isExpanded = termsToggle.classList.toggle('expanded');
+      if (isExpanded) {
+        termsContent.classList.remove('hidden');
+      } else {
+        termsContent.classList.add('hidden');
+      }
+    });
+  }
+
+  // 6. Form Submission & Ticket Generation
+  let currentTicketSummary = '';
+
+  if (form && successView) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const brandName = document.getElementById('bt-brand-name').value.trim();
+      const contactName = document.getElementById('bt-contact-name').value.trim();
+      const contactEmail = document.getElementById('bt-contact-email').value.trim();
+      const contactPhone = document.getElementById('bt-contact-phone').value.trim() || 'Not specified';
+      const deliverables = deliverablesVal ? deliverablesVal.value : 'Key Visual (KV) Design';
+      
+      // Headline
+      const activeHeadlineTab = headlineTabs ? headlineTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
+      const headlineText = activeHeadlineTab === 'custom' 
+        ? (headlineInput && headlineInput.value.trim() ? headlineInput.value.trim() : 'Custom headline specified')
+        : '⚡ Creative headline & slogan ideation requested from Burak Hellagu';
+
+      // Body Copy
+      const activeBodyTab = bodyTabs ? bodyTabs.querySelector('.choice-tab.active').getAttribute('data-mode') : 'custom';
+      const bodyText = activeBodyTab === 'custom'
+        ? (bodyInput && bodyInput.value.trim() ? bodyInput.value.trim() : 'None provided')
+        : '⚡ High-impact brand narrative structure requested from Burak Hellagu';
+
+      const badgeText = document.getElementById('bt-badge-input').value.trim() || 'None';
+      const legalText = document.getElementById('bt-legal-input').value.trim() || 'None';
+      const channels = channelsVal ? channelsVal.value : 'Standard Digital & Social';
+      const customDimensions = document.getElementById('bt-custom-dimensions').value.trim() || 'Standard aspect ratios';
+      const cloudLink = document.getElementById('bt-cloud-link').value.trim() || 'Assets to be sent via email';
+
+      // Generate Ticket ID e.g. #BH-7842
+      const ticketNum = Math.floor(1000 + Math.random() * 9000);
+      const ticketId = `#BH-${ticketNum}`;
+      const now = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+      // Build Summary String
+      currentTicketSummary = `═════════════════════════════════════════
+BURAK HELLAGU - CREATIVE BRIEF TICKET ${ticketId}
+Generated Date: ${now}
+═════════════════════════════════════════
+
+[01] CLIENT & CONTACT
+• Brand / Company: ${brandName}
+• Contact Person: ${contactName}
+• Email: ${contactEmail}
+• Phone: ${contactPhone}
+• Deliverables: ${deliverables}
+
+[02] COPYWRITING & HIERARCHY
+• Headline Strategy: ${headlineText}
+• Body Narrative: ${bodyText}
+• Highlight Badge: ${badgeText}
+• Legal Fine Print: ${legalText}
+
+[03] CHANNELS & SPECS
+• Target Channels: ${channels}
+• Custom Dimensions: ${customDimensions}
+
+[04] ASSETS & TERMS
+• Cloud / WeTransfer Link: ${cloudLink}
+• Terms & 50% Advance Consent: Confirmed & Accepted
+
+═════════════════════════════════════════
+Status: Awaiting Creative Review (24-48h Turnaround)
+Portfolio: https://burakhellagu.com
+═════════════════════════════════════════`;
+
+      // Update Summary UI
+      const summaryIdEl = document.getElementById('bt-summary-id');
+      if (summaryIdEl) summaryIdEl.textContent = ticketId;
+
+      const summaryBody = document.getElementById('bt-summary-body');
+      if (summaryBody) {
+        summaryBody.innerHTML = `
+          <p><strong>Brand / Marka:</strong> ${brandName}</p>
+          <p><strong>Contact / Yetkili:</strong> ${contactName} (${contactEmail})</p>
+          <p><strong>Deliverables / Çıktılar:</strong> ${deliverables}</p>
+          <p><strong>Headline / Başlık:</strong> ${headlineText}</p>
+          <p><strong>Channels / Mecralar:</strong> ${channels}</p>
+          <p><strong>Assets Link:</strong> <a href="${cloudLink}" target="_blank" style="color: #d4af37; text-decoration: underline;">${cloudLink}</a></p>
+          <p><strong>Date / Tarih:</strong> ${now}</p>
+        `;
+      }
+
+      // Switch to Success View
+      form.classList.add('hidden');
+      successView.classList.remove('hidden');
+
+      // Scroll modal to top to view success animation
+      const modalContainer = modal.querySelector('.brief-modal-container');
+      if (modalContainer) modalContainer.scrollTop = 0;
+    });
+  }
+
+  // Copy Ticket Button
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      if (navigator.clipboard && currentTicketSummary) {
+        navigator.clipboard.writeText(currentTicketSummary).then(() => {
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<span>✓ Copied to Clipboard!</span>';
+          copyBtn.style.borderColor = '#4bb543';
+          copyBtn.style.color = '#4bb543';
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.borderColor = '';
+            copyBtn.style.color = '';
+          }, 2500);
+        });
+      }
+    });
+  }
+
+  // Done button
+  if (closeSuccessBtn) {
+    closeSuccessBtn.addEventListener('click', () => {
+      closeModal();
+      setTimeout(() => {
+        if (form && successView) {
+          form.reset();
+          form.classList.remove('hidden');
+          successView.classList.add('hidden');
+        }
+      }, 400);
+    });
+  }
 }
 
