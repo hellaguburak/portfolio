@@ -1320,6 +1320,7 @@ function initPhilosophyStoryboard() {
  */
 function initProjectGalleryModal() {
   const toTurkishUppercase = (str) => {
+    if (!str) return '';
     return str
       .replace(/i/g, 'İ')
       .replace(/ı/g, 'I')
@@ -1329,6 +1330,8 @@ function initProjectGalleryModal() {
   const modal = document.getElementById('project-modal');
   const closeBtn = document.getElementById('modal-close');
   const backdrop = document.getElementById('modal-backdrop');
+  if (!modal || !closeBtn) return;
+
   const modalContainer = modal.querySelector('.modal-container');
   const contentWrapper = modal.querySelector('.modal-content-wrapper');
   const modalTitle = document.getElementById('modal-project-title');
@@ -1359,26 +1362,32 @@ function initProjectGalleryModal() {
   const cardsArray = Array.from(cards);
 
   const openProjectModal = (card) => {
+    if (!card) return;
+
     const titleEl = card.querySelector('.portfolio-title');
-    const titleText = titleEl ? titleEl.textContent.trim() : '';
-    activeCardIndex = cardsArray.findIndex(c => c.querySelector('.portfolio-title').textContent.trim() === titleText);
-    if (activeCardIndex === -1) return;
+    const title = titleEl ? titleEl.textContent.trim() : '';
+    
+    activeCardIndex = cardsArray.findIndex(c => {
+      const t = c.querySelector('.portfolio-title');
+      return t && t.textContent.trim() === title;
+    });
+    if (activeCardIndex === -1) activeCardIndex = 0;
 
     const link = card.querySelector('.portfolio-link');
-    if (!link) return;
-
-    const title = card.querySelector('.portfolio-title').textContent.trim();
+    const descEnEl = card.querySelector('.portfolio-desc .lang-en');
+    const descTrEl = card.querySelector('.portfolio-desc .lang-tr');
+    const descEl = card.querySelector('.portfolio-desc');
     
-    // Extract clean description lines
-    const descEn = card.querySelector('.portfolio-desc .lang-en').textContent.trim();
-    const descTr = card.querySelector('.portfolio-desc .lang-tr').textContent.trim();
+    const descEn = descEnEl ? descEnEl.textContent.trim() : (descEl ? descEl.textContent.trim() : '');
+    const descTr = descTrEl ? descTrEl.textContent.trim() : (descEl ? descEl.textContent.trim() : '');
     
-    const coverImg = card.querySelector('.portfolio-img').src;
+    const imgEl = card.querySelector('.portfolio-img');
+    const coverImg = imgEl ? imgEl.src : '';
     
     // Parse gallery ID from Behance URL
-    const href = link.getAttribute('href');
     let galleryId = null;
-    if (href) {
+    if (link) {
+      const href = link.getAttribute('href') || '';
       const match = href.match(/\/gallery\/(\d+)/);
       if (match) {
         galleryId = match[1];
@@ -1391,11 +1400,13 @@ function initProjectGalleryModal() {
     }
     
     // Clear old content
-    galleryContent.innerHTML = '';
+    if (galleryContent) {
+      galleryContent.innerHTML = '';
+    }
     
     // Set title and description
-    modalTitle.innerHTML = toTurkishUppercase(title);
-    modalDesc.innerHTML = `<span class="lang-en">${descEn}</span><span class="lang-tr">${descTr}</span>`;
+    if (modalTitle) modalTitle.innerHTML = toTurkishUppercase(title);
+    if (modalDesc) modalDesc.innerHTML = `<span class="lang-en">${descEn}</span><span class="lang-tr">${descTr}</span>`;
     
     // Dynamic dominant color background setup
     let modules = [];
@@ -1841,6 +1852,15 @@ function initProjectGalleryModal() {
       }
     });
   }
+
+  // Also bind direct click handlers to all cards and links for 100% guarantee
+  document.querySelectorAll('.portfolio-slide-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      openProjectModal(card);
+    });
+  });
   
   const closeModal = () => {
     // Pause standard videos and clear dynamic content to stop all iframes, youtube/vimeo, and audio
