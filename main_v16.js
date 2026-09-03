@@ -2440,36 +2440,41 @@ Portfolio: https://burakhellagu.com
         `;
       }
 
-      // Send Email in Background to hello@burakhellagu.com & hellaguburak@gmail.com
+      // Send Email in Background to hello@burakhellagu.com & hellaguburak@gmail.com (Dual Redundancy)
+      const payload = {
+        _subject: `[Brief Ticket ${ticketId}] ${brandName}`,
+        _replyto: contactEmail,
+        _cc: 'hellaguburak@gmail.com',
+        Ticket_ID: ticketId,
+        Brand_Company: brandName,
+        Contact_Person: contactName,
+        Email: contactEmail,
+        Phone: contactPhone,
+        Deliverables: deliverables,
+        Strategic_Insight: strategyText,
+        Headline: headlineText,
+        Body_Copy: bodyText,
+        Badge: badgeText,
+        Legal_Fine_Print: legalText,
+        Channels_Aspect_Ratios: channels,
+        Custom_Dimensions: customDimensions,
+        Assets_Cloud_Link: cloudLink,
+        Advance_Terms_Consent: 'Accepted & Confirmed',
+        Full_Ticket_Summary: currentTicketSummary
+      };
+
       try {
         fetch('https://formsubmit.co/ajax/hello@burakhellagu.com', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: `[Brief Ticket ${ticketId}] ${brandName}`,
-            _replyto: contactEmail,
-            _cc: 'hellaguburak@gmail.com',
-            Ticket_ID: ticketId,
-            Brand_Company: brandName,
-            Contact_Person: contactName,
-            Email: contactEmail,
-            Phone: contactPhone,
-            Deliverables: deliverables,
-            Strategic_Insight: strategyText,
-            Headline: headlineText,
-            Body_Copy: bodyText,
-            Badge: badgeText,
-            Legal_Fine_Print: legalText,
-            Channels_Aspect_Ratios: channels,
-            Custom_Dimensions: customDimensions,
-            Assets_Cloud_Link: cloudLink,
-            Advance_Terms_Consent: 'Accepted & Confirmed',
-            Full_Ticket_Summary: currentTicketSummary
-          })
-        }).catch(err => console.log('Email delivery dispatch:', err));
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(err => console.log('Dispatch 1:', err));
+
+        fetch('https://formsubmit.co/ajax/hellaguburak@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(err => console.log('Dispatch 2:', err));
       } catch (err) {
         console.log('Dispatch error:', err);
       }
