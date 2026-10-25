@@ -198,9 +198,10 @@ header.scrolled {
 
 .nav-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 48px; /* Apple standard thin navigation bar */
+  width: 100%;
 }
 
 .logo {
@@ -217,7 +218,11 @@ header.scrolled {
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 2.4rem;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
