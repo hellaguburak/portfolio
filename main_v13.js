@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   safeInit(initPortfolioHeaderScrollAnimation, 'PortfolioHeaderScrollAnimation');
   safeInit(initExperienceSyncScroll, 'ExperienceSyncScroll');
   safeInit(initMouseGlowAndRipples, 'MouseGlowAndRipples');
+  safeInit(initFluidCursorTrail, 'FluidCursorTrail');
   safeInit(initSmokeTypography, 'SmokeTypography');
   safeInit(initSuiTransition, 'SuiTransition');
   safeInit(initCardReflections, 'CardReflections');
@@ -454,36 +455,8 @@ function initInteractivePortfolioCards() {
 function initMouseGlowAndRipples() {
   const glow = document.getElementById('cursor-glow');
   
-  // Mouse movement glow tracking and particle trail
   if (glow) {
     let hasMoved = false;
-    let lastTime = 0;
-    
-    const createParticle = (x, y) => {
-      const particle = document.createElement('div');
-      particle.className = 'mouse-particle';
-      
-      // Randomize particle sizes and trajectories
-      const size = Math.random() * 6 + 3; // 3px to 9px
-      const lifetime = Math.random() * 400 + 400; // 400ms to 800ms
-      const dx = (Math.random() - 0.5) * 80; // random horizontal drift -40px to 40px
-      const dy = (Math.random() - 0.5) * 80; // random vertical drift
-      
-      particle.style.setProperty('--size', `${size}px`);
-      particle.style.setProperty('--lifetime', `${lifetime}ms`);
-      particle.style.setProperty('--dx', `${dx}px`);
-      particle.style.setProperty('--dy', `${dy}px`);
-      
-      particle.style.left = `${x}px`;
-      particle.style.top = `${y}px`;
-      
-      document.body.appendChild(particle);
-      
-      // Remove element from DOM after animation completes
-      setTimeout(() => {
-        particle.remove();
-      }, lifetime);
-    };
     
     window.addEventListener('mousemove', (e) => {
       if (!hasMoved) {
@@ -495,15 +468,8 @@ function initMouseGlowAndRipples() {
         glow.style.left = `${e.clientX}px`;
         glow.style.top = `${e.clientY}px`;
       });
-      
-      const now = Date.now();
-      if (now - lastTime > 25) { // Spawn at most one particle every 25ms to balance visuals & performance
-        createParticle(e.clientX, e.clientY);
-        lastTime = now;
-      }
-    });
+    }, { passive: true });
     
-    // Dim down on normal hover, flash brightly on click
     window.addEventListener('mousedown', () => {
       glow.classList.add('click-active');
     });
@@ -534,7 +500,221 @@ function initMouseGlowAndRipples() {
       ripple.remove();
     }, 800);
   });
-  
+}
+
+/**
+ * Interactive Minimal Fluid Chromatic Mouse Trail (KIKK 2016 inspired)
+ * High-performance 60fps canvas ribbon with fluid inertia, multi-strand chromatic shifts,
+ * delicate stardust, and graceful idle dissipation.
+ */
+function initFluidCursorTrail() {
+  const canvas = document.getElementById('cursor-trail-canvas');
+  if (!canvas) return;
+
+  // Disable on touch devices
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    canvas.style.display = 'none';
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let mouse = { x: width / 2, y: height / 2 };
+  let lastMouse = { x: width / 2, y: height / 2 };
+  let mouseSpeed = 0;
+  let isMoving = false;
+  let idleTimer = null;
+  let activityAlpha = 0;
+  let globalHueOffset = 0;
+  let animFrame = null;
+  let hasInitiated = false;
+
+  // 3 Chromatic Intertwined Ribbon Strands (Cyan/Blue, Ultraviolet, Champagne Gold)
+  const STRAND_CONFIGS = [
+    { nodeCount: 26, damp: 0.44, width: 4.2, baseHue: 202, hueShift: 0, glow: 12, alpha: 0.72 },
+    { nodeCount: 30, damp: 0.35, width: 3.2, baseHue: 275, hueShift: 38, glow: 10, alpha: 0.60 },
+    { nodeCount: 34, damp: 0.27, width: 2.2, baseHue: 42, hueShift: -32, glow: 8, alpha: 0.48 }
+  ];
+
+  const strands = STRAND_CONFIGS.map(cfg => {
+    const nodes = [];
+    for (let i = 0; i < cfg.nodeCount; i++) {
+      nodes.push({ x: width / 2, y: height / 2 });
+    }
+    return { ...cfg, nodes };
+  });
+
+  // Stardust micro-particles
+  const particles = [];
+  function spawnParticle(x, y, hue) {
+    if (particles.length > 35) return;
+    particles.push({
+      x: x + (Math.random() - 0.5) * 6,
+      y: y + (Math.random() - 0.5) * 6,
+      vx: (Math.random() - 0.5) * 1.4,
+      vy: (Math.random() - 0.5) * 1.4 - 0.2,
+      size: Math.random() * 1.8 + 0.8,
+      life: 1.0,
+      decay: Math.random() * 0.035 + 0.025,
+      hue: hue
+    });
+  }
+
+  function onMouseMove(e) {
+    if (!hasInitiated) {
+      strands.forEach(s => s.nodes.forEach(n => { n.x = e.clientX; n.y = e.clientY; }));
+      lastMouse.x = e.clientX;
+      lastMouse.y = e.clientY;
+      hasInitiated = true;
+    }
+
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    isMoving = true;
+
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      isMoving = false;
+    }, 140);
+
+    if (!animFrame) {
+      animFrame = requestAnimationFrame(render);
+    }
+  }
+
+  window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+  function render() {
+    const isModalOpen = document.body.classList.contains('modal-open');
+    if (document.hidden || isModalOpen) {
+      activityAlpha = Math.max(0, activityAlpha - 0.1);
+      ctx.clearRect(0, 0, width, height);
+      if (activityAlpha > 0.01) {
+        animFrame = requestAnimationFrame(render);
+      } else {
+        animFrame = null;
+      }
+      return;
+    }
+
+    const dx = mouse.x - lastMouse.x;
+    const dy = mouse.y - lastMouse.y;
+    const dist = Math.hypot(dx, dy);
+    mouseSpeed = mouseSpeed * 0.75 + dist * 0.25;
+    lastMouse.x = mouse.x;
+    lastMouse.y = mouse.y;
+
+    if (isMoving || mouseSpeed > 0.4) {
+      activityAlpha = Math.min(1.0, activityAlpha + 0.14);
+      globalHueOffset = (globalHueOffset + mouseSpeed * 0.12 + 0.18) % 360;
+    } else {
+      activityAlpha = Math.max(0.0, activityAlpha - 0.035);
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    if (activityAlpha > 0.005) {
+      strands.forEach((strand, sIndex) => {
+        // Smooth head tracking
+        strand.nodes[0].x += (mouse.x - strand.nodes[0].x) * strand.damp;
+        strand.nodes[0].y += (mouse.y - strand.nodes[0].y) * strand.damp;
+
+        // Progressive physics through the chain
+        for (let i = 1; i < strand.nodes.length; i++) {
+          const prev = strand.nodes[i - 1];
+          const curr = strand.nodes[i];
+          curr.x += (prev.x - curr.x) * strand.damp;
+          curr.y += (prev.y - curr.y) * strand.damp;
+        }
+
+        // Spawn occasional stardust
+        if (sIndex === 0 && mouseSpeed > 5 && Math.random() < 0.28) {
+          spawnParticle(strand.nodes[1].x, strand.nodes[1].y, (strand.baseHue + globalHueOffset) % 360);
+        }
+
+        // Draw ribbon with smooth Quadratic Bezier segments
+        const nodes = strand.nodes;
+        const currentHue = (strand.baseHue + globalHueOffset + strand.hueShift) % 360;
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'screen';
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        for (let i = 0; i < nodes.length - 1; i++) {
+          const ratio = i / (nodes.length - 1);
+          const fade = Math.pow(1 - ratio, 1.25);
+          const segAlpha = strand.alpha * fade * activityAlpha;
+          if (segAlpha < 0.01) continue;
+
+          const p0 = nodes[i];
+          const p1 = nodes[i + 1];
+          const xc = (p0.x + p1.x) / 2;
+          const yc = (p0.y + p1.y) / 2;
+
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y);
+          ctx.quadraticCurveTo(p0.x, p0.y, xc, yc);
+
+          const segWidth = Math.max(0.6, strand.width * fade);
+          ctx.lineWidth = segWidth;
+          ctx.strokeStyle = `hsla(${currentHue}, 92%, 66%, ${segAlpha})`;
+          ctx.shadowColor = `hsla(${currentHue}, 95%, 62%, ${segAlpha * 0.75})`;
+          ctx.shadowBlur = strand.glow * fade;
+          ctx.stroke();
+        }
+        ctx.restore();
+      });
+    }
+
+    // Render particles
+    if (particles.length > 0) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 92%, 72%, ${p.life * 0.55 * activityAlpha})`;
+        ctx.shadowColor = `hsla(${p.hue}, 95%, 65%, ${p.life * 0.7 * activityAlpha})`;
+        ctx.shadowBlur = 5;
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // Keep loop active while there is visible activity or particles
+    if (activityAlpha > 0.005 || particles.length > 0) {
+      animFrame = requestAnimationFrame(render);
+    } else {
+      animFrame = null;
+    }
+  }
+}  
   // Language Selector toggle (Global, Header, Story & Brief Modal)
   const langTr = document.getElementById('lang-tr');
   const langEn = document.getElementById('lang-en');
