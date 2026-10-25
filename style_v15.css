@@ -634,10 +634,13 @@ footer {
 }
 
 .hero-subtitle {
-  font-size: 1.35rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
   color: var(--text-secondary);
-  max-width: 600px;
-  margin-bottom: 3.5rem;
+  max-width: 580px;
+  margin-bottom: 3rem;
+  text-align: center;
 }
 
 /* Scroll Translation Containers for Hero Overlays (Dramatic Separation) */
@@ -702,6 +705,12 @@ footer {
   .hero-badge {
     font-size: 1.05rem !important;
     letter-spacing: calc(0.3em - var(--scroll-progress, 0) * 0.28em) !important;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 90%;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -888,6 +897,12 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .hero-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 94%;
+    margin-bottom: 2rem;
+  }
   .hero-actions {
     flex-direction: column;
     width: 100%;
