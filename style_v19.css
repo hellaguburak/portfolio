@@ -198,10 +198,9 @@ header.scrolled {
 
 .nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 48px; /* Apple standard thin navigation bar */
-  width: 100%;
 }
 
 .logo {
@@ -218,11 +217,7 @@ header.scrolled {
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 2.2rem;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+  gap: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -2148,22 +2143,6 @@ footer {
     height: 160px;
     opacity: 0;
     border-color: rgba(41, 151, 255, 0);
-  }
-/* Interactive Minimal Fluid Chromatic Mouse Trail Canvas (KIKK-inspired) */
-#cursor-trail-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 95;
-  mix-blend-mode: screen;
-}
-
-@media (pointer: coarse) {
-  #cursor-trail-canvas {
-    display: none !important;
   }
 }
 
